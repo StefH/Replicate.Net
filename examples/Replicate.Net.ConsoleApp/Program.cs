@@ -2,6 +2,7 @@
 using Replicate.Net.Client;
 using Replicate.Net.Factory;
 using Replicate.Net.Models.Predictions;
+using Replicate.Net.Settings;
 
 var factory = new PredictionsApiFactory();
 
@@ -16,7 +17,7 @@ await RunOnPredictionsAsync(factory).ConfigureAwait(false);
 
 async Task RunOnLocalAsync(IPredictionsApiFactory factory)
 {
-    var client = factory.GetClient("https://localhost:5000");
+    var client = factory.GetClient(new ClientSettings { Url = "http://localhost:5000/predictions" });
 
     var request = new Request
     {
@@ -26,9 +27,6 @@ async Task RunOnLocalAsync(IPredictionsApiFactory factory)
             Prompt = prompt
         }
     };
-
-    var predictions = await client.GetPredictionsAsync().ConfigureAwait(false);
-    Console.WriteLine("predictions = {0}", predictions.Results?.Count);
 
     var response = await client.CreatePredictionAndWaitOnResultAsync(request).ConfigureAwait(false);
 

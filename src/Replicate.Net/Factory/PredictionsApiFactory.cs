@@ -1,4 +1,5 @@
 ﻿using Replicate.Net.Client;
+using Replicate.Net.Settings;
 using RestEase;
 using Stef.Validation;
 
@@ -8,21 +9,23 @@ public class PredictionsApiFactory : IPredictionsApiFactory
 {
     private const string PredictionUrl = "https://api.replicate.com/v1/predictions";
 
-    public IPredictionsApi GetClient(string url, string? token)
+    public IPredictionsApi GetClient(ClientSettings settings)
     {
-        var client = new RestClient(Guard.NotNullOrEmpty(url)).For<IPredictionsApi>();
-        
-        if (!string.IsNullOrEmpty(token))
+        Guard.NotNull(settings);
+
+        var url = !string.IsNullOrEmpty(settings.Url) ? settings.Url : PredictionUrl;
+        var client = new RestClient(url).For<IPredictionsApi>();
+
+        if (!string.IsNullOrEmpty(settings.Token))
         {
-            client.Token = token;
+            client.Token = settings.Token;
         }
 
         return client;
     }
 
-
-    public IPredictionsApi GetClient(string? token = null)
+    public IPredictionsApi GetClient(string token)
     {
-        return GetClient(PredictionUrl, token);
+        return GetClient(new ClientSettings { Token = token });
     }
 }

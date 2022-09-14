@@ -12,7 +12,7 @@ namespace Replicate.Net.Client;
 public interface IPredictionsApi
 {
     [Header("Authorization", Format = "Token {0}")]
-    string Token { get; set; }
+    string? Token { get; set; }
 
     [Post("{predictionId}/cancel")]
     Task<Result> CancelPredictionAsync([Path] string predictionId, CancellationToken cancellationToken = default);
