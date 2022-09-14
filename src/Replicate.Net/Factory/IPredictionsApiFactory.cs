@@ -4,5 +4,8 @@ namespace Replicate.Net.Factory;
 
 public interface IPredictionsApiFactory
 {
-    IPredictionsApi GetClient();
+    IPredictionsApi GetClient(string url, string token);
+
+
+    IPredictionsApi GetClient(string? token = null);
 }

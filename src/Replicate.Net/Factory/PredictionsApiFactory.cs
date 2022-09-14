@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using Replicate.Net.Client;
+﻿using Replicate.Net.Client;
 using RestEase;
 using Stef.Validation;
 
@@ -8,18 +6,24 @@ namespace Replicate.Net.Factory;
 
 public class PredictionsApiFactory : IPredictionsApiFactory
 {
-    private readonly string _token;
+    private const string PredictionUrl = "https://api.replicate.com/v1/predictions";
 
-    public PredictionsApiFactory(string token)
+    public IPredictionsApi GetClient(string url, string token)
     {
-        _token = Guard.NotNullOrEmpty(token);
+        var client = new RestClient(Guard.NotNullOrEmpty(url)).For<IPredictionsApi>();
+        client.Token = Guard.NotNullOrEmpty(token);
+        return client;
     }
 
-    public IPredictionsApi GetClient()
-    {
-        var client = new RestClient("https://api.replicate.com/v1/predictions").For<IPredictionsApi>();
 
-        client.Token = _token;
+    public IPredictionsApi GetClient(string? token = null)
+    {
+        var client = new RestClient(PredictionUrl).For<IPredictionsApi>();
+
+        if (!string.IsNullOrEmpty(token))
+        {
+            client.Token = token;
+        }
 
         return client;
     }

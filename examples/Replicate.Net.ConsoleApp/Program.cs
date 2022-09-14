@@ -3,9 +3,9 @@ using Replicate.Net.Client;
 using Replicate.Net.Factory;
 using Replicate.Net.Models.Predictions;
 
-var factory = new PredictionsApiFactory(Environment.GetEnvironmentVariable("replicate_token")!);
+IPredictionsApiFactory factory = new PredictionsApiFactory();
 
-var client = factory.GetClient();
+var client = factory.GetClient(Environment.GetEnvironmentVariable("replicate_token")!);
 
 var request = new Request
 {
