@@ -3,7 +3,7 @@ using Replicate.Net.Client;
 using Replicate.Net.Factory;
 using Replicate.Net.Predictions;
 
-var factory = new PredictionsApiFactory();
+var factory = new ReplicateApiFactory();
 
 var version = "a9758cbfbd5f3c2094457d996681af52552901775aa2d6dd0b17fd15df959bef";
 var prompt = "a gentleman cat with blue eyes wearing a tophat in a 19th century portrait";
@@ -28,9 +28,9 @@ catch (Exception e)
 
 // -------------------------------------------------------------------------------------------------------------
 
-async Task RunOnLocalAsync(IPredictionsApiFactory factory)
+async Task RunOnLocalAsync(IReplicateApiFactory factory)
 {
-    var client = factory.GetClient(new Uri("http://localhost:5000/predictions"));
+    var client = factory.GetApi(new Uri("http://localhost:5000"));
 
     var request = new Request
     {
@@ -47,9 +47,9 @@ async Task RunOnLocalAsync(IPredictionsApiFactory factory)
 }
 
 
-async Task RunOnPredictionsAsync(IPredictionsApiFactory factory)
+async Task RunOnPredictionsAsync(IReplicateApiFactory factory)
 {
-    var client = factory.GetClient(Environment.GetEnvironmentVariable("replicate_token")!);
+    var client = factory.GetApi(Environment.GetEnvironmentVariable("replicate_token")!);
 
     var request = new Request
     {

@@ -3,9 +3,9 @@ using Replicate.Net.Client;
 
 namespace Replicate.Net.Factory;
 
-public interface IPredictionsApiFactory
+public interface IReplicateApiFactory
 {
-    IPredictionsApi GetClient(Uri baseUrl, string? token = null);
+    IReplicateApi GetApi(Uri baseUrl, string? token = null);
     
-    IPredictionsApi GetClient(string token);
+    IReplicateApi GetApi(string token);
 }

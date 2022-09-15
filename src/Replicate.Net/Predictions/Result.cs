@@ -30,7 +30,7 @@ public class Result
 
     public string[]? Output { get; set; }
 
-    public string? Error { get; set; }
+    public object? Error { get; set; }
 
     public string? Logs { get; set; }
 

@@ -7,12 +7,13 @@ using Stef.Validation;
 
 namespace Replicate.Net.Client;
 
-public static class PredictionsApiExtensions
+// ReSharper disable once InconsistentNaming
+public static class IReplicateApiExtensions
 {
     private const int WaitTimeInSeconds = 3;
     private static readonly string[] RunningStates = { "starting", "processing" };
 
-    public static async Task<Result> CreatePredictionAndWaitOnResultAsync(this IPredictionsApi api, object requestAsObject, int timeoutInSeconds = 60, CancellationToken cancellationToken = default)
+    public static async Task<Result> CreatePredictionAndWaitOnResultAsync(this IReplicateApi api, object requestAsObject, int timeoutInSeconds = 60, CancellationToken cancellationToken = default)
     {
         Guard.NotNull(api);
         Guard.NotNull(requestAsObject);

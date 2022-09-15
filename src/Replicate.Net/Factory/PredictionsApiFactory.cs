@@ -5,15 +5,15 @@ using Stef.Validation;
 
 namespace Replicate.Net.Factory;
 
-public class PredictionsApiFactory : IPredictionsApiFactory
+public class ReplicateApiFactory : IReplicateApiFactory
 {
-    private static readonly Uri PredictionBaseUrl = new("https://api.replicate.com/v1/predictions");
+    private static readonly Uri PredictionBaseUrl = new("https://api.replicate.com/v1");
 
-    public IPredictionsApi GetClient(Uri baseUrl, string? token = null)
+    public IReplicateApi GetApi(Uri baseUrl, string? token = null)
     {
         Guard.NotNull(baseUrl);
 
-        var client = new RestClient(baseUrl).For<IPredictionsApi>();
+        var client = new RestClient(baseUrl).For<IReplicateApi>();
 
         if (!string.IsNullOrEmpty(token))
         {
@@ -23,8 +23,8 @@ public class PredictionsApiFactory : IPredictionsApiFactory
         return client;
     }
 
-    public IPredictionsApi GetClient(string token)
+    public IReplicateApi GetApi(string token)
     {
-        return GetClient(PredictionBaseUrl, token);
+        return GetApi(PredictionBaseUrl, token);
     }
 }

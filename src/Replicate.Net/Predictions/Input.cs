@@ -14,16 +14,16 @@ public class Input
     public string Prompt { get; set; } = null!;
 
     /// <summary>
-    /// Width of output image. Maximum size is 1024x768 or 768x1024 because of memory limits.
+    /// Width of output image. Maximum size is 1024x768 or 768x1024 because of memory limits. Valid values are 128, 256, 512, 768 and 1024.
     /// </summary>
     [JsonProperty("width")]
-    public int Width { get; set; } = 128;
+    public int Width { get; set; } = 512;
 
     /// <summary>
-    /// Height of output image. Maximum size is 1024x768 or 768x1024 because of memory limits.
+    /// Height of output image. Maximum size is 1024x768 or 768x1024 because of memory limits. Valid values are 128, 256, 512, 768 and 1024.
     /// </summary>
     [JsonProperty("height")]
-    public int Height { get; set; } = 128;
+    public int Height { get; set; } = 512;
 
     /// <summary>
     /// Initial image to generate variations of. Will be resized to the specified width and height.
@@ -45,7 +45,7 @@ public class Input
     public double PromptStrength { get; set; } = 0.8;
 
     /// <summary>
-    /// Number of images to output, 1 to 4. Default 4.
+    /// Number of images to output. Default 4. Valid values are 1 and 4.
     /// </summary>
     [JsonProperty("num_outputs")]
     public int NumberOfOutputs { get; set; } = 4;

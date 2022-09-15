@@ -7,9 +7,9 @@ A C# RestEase client for Replicate (A latent text-to-image diffusion model capab
 
 ## Example
 ``` c#
-var factory = new PredictionsApiFactory("{token}");
+var factory = new PredictionsApiFactory();
 
-var client = factory.GetClient();
+var replicateApi = factory.GetApi("{token}");
 
 var request = new Request
 {
@@ -20,5 +20,5 @@ var request = new Request
     }
 };
 
-var response = await client.CreatePredictionAndWaitOnResultAsync(request).ConfigureAwait(false);
+var response = await replicateApi.CreatePredictionAndWaitOnResultAsync(request).ConfigureAwait(false);
 ```
