@@ -1,4 +1,5 @@
 ﻿using System;
+using AnyOfTypes;
 using Newtonsoft.Json;
 
 namespace Replicate.Net.Predictions;
@@ -28,7 +29,9 @@ public class Result
 
     public Input Input { get; set; } = null!;
 
-    public string[]? Output { get; set; }
+    // public AnyOf<string, string[]>? Output { get; set; }
+
+    public object? Output { get; set; } // string or string[]
 
     public object? Error { get; set; }
 

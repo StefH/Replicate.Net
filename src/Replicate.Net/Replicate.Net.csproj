@@ -26,10 +26,12 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="IsExternalInit" Version="1.0.3">
+        <!--<PackageReference Include="AnyOf" Version="0.3.0" />-->
+        <PackageReference Include="AnyOf.Newtonsoft.Json" Version="0.3.0" />
+        <!--<PackageReference Include="IsExternalInit" Version="1.0.3">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
+        </PackageReference>-->
         <PackageReference Include="RestEase" Version="1.5.7" />
         <PackageReference Include="Stef.Validation" Version="0.1.0" />
     </ItemGroup>

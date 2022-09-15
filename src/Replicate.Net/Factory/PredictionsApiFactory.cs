@@ -1,4 +1,8 @@
 ﻿using System;
+using AnyOfTypes.Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
 using Replicate.Net.Client;
 using RestEase;
 using Stef.Validation;
@@ -9,11 +13,21 @@ public class ReplicateApiFactory : IReplicateApiFactory
 {
     private static readonly Uri PredictionBaseUrl = new("https://api.replicate.com/v1");
 
+    private static readonly JsonSerializerSettings Settings = new()
+    {
+        Converters = { new AnyOfJsonConverter() }
+    };
+
+
     public IReplicateApi GetApi(Uri baseUrl, string? token = null)
     {
         Guard.NotNull(baseUrl);
 
-        var client = new RestClient(baseUrl).For<IReplicateApi>();
+        var client = new RestClient(baseUrl)
+        {
+            JsonSerializerSettings = Settings
+        }
+        .For<IReplicateApi>();
 
         if (!string.IsNullOrEmpty(token))
         {
