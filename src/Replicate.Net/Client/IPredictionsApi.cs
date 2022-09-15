@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Replicate.Net.Constants;
-using Replicate.Net.Models.Predictions;
+using Replicate.Net.Predictions;
 using RestEase;
 
 namespace Replicate.Net.Client;
@@ -30,5 +30,5 @@ public interface IPredictionsApi
     Task<Result> GetPredictionAsync([Path] string predictionId, CancellationToken cancellationToken = default);
 
     [Get]
-    Task<Predictions> GetPredictionsAsync(CancellationToken cancellationToken = default);
+    Task<Predictions.Predictions> GetPredictionsAsync(CancellationToken cancellationToken = default);
 }

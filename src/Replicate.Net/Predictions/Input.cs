@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Replicate.Net.Models.Predictions;
+namespace Replicate.Net.Predictions;
 
 /// <summary>
 /// The model's input.

@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Replicate.Net.Models.Predictions;
+using Replicate.Net.Predictions;
 using Stef.Validation;
 
 namespace Replicate.Net.Client;

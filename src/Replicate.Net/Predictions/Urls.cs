@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Replicate.Net.Models.Predictions;
+namespace Replicate.Net.Predictions;
 
 public class Urls
 {

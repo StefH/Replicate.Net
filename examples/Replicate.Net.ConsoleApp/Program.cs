@@ -1,23 +1,36 @@
 ﻿using Newtonsoft.Json;
 using Replicate.Net.Client;
 using Replicate.Net.Factory;
-using Replicate.Net.Models.Predictions;
-using Replicate.Net.Settings;
+using Replicate.Net.Predictions;
 
 var factory = new PredictionsApiFactory();
 
 var version = "a9758cbfbd5f3c2094457d996681af52552901775aa2d6dd0b17fd15df959bef";
 var prompt = "a gentleman cat with blue eyes wearing a tophat in a 19th century portrait";
 
-// await RunOnLocalAsync(factory).ConfigureAwait(false);
+try
+{
+    await RunOnLocalAsync(factory).ConfigureAwait(false);
+}
+catch (Exception e)
+{
+    Console.WriteLine(e);
+}
 
-await RunOnPredictionsAsync(factory).ConfigureAwait(false);
+try
+{
+    await RunOnPredictionsAsync(factory).ConfigureAwait(false);
+}
+catch (Exception e)
+{
+    Console.WriteLine(e);
+}
 
 // -------------------------------------------------------------------------------------------------------------
 
 async Task RunOnLocalAsync(IPredictionsApiFactory factory)
 {
-    var client = factory.GetClient(new ClientSettings { Url = "http://localhost:5000/predictions" });
+    var client = factory.GetClient(new Uri("http://localhost:5000/predictions"));
 
     var request = new Request
     {

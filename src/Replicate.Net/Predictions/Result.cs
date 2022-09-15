@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace Replicate.Net.Models.Predictions;
+namespace Replicate.Net.Predictions;
 
 public class Result
 {
