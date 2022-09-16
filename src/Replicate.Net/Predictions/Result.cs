@@ -29,7 +29,7 @@ public class Result
 
     public Input Input { get; set; } = null!;
 
-    public AnyOf<string, string[]>? Output { get; set; }
+    public object? Output { get; set; }
 
     //public object? Output { get; set; } // string or string[]
 

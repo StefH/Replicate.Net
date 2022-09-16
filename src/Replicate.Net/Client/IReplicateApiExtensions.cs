@@ -31,7 +31,7 @@ public static class IReplicateApiExtensions
 
         return await CallAsync(
             timeoutInSeconds,
-            async () => await api.GetPredictionAsync(createPredictionResponse.Id, cancellationToken).ConfigureAwait(false),
+            async ct => await api.GetPredictionAsync(createPredictionResponse.Id, ct).ConfigureAwait(false),
             result => RunningStates.Any(s => string.Equals(s, result.Status, StringComparison.OrdinalIgnoreCase)),
             cancellationToken
         );
@@ -39,17 +39,22 @@ public static class IReplicateApiExtensions
 
     private static async Task<T> CallAsync<T>(
         int timeoutInSeconds,
-        Func<Task<T>> checkAsync,
+        Func<CancellationToken, Task<T>> checkAsync,
         Func<T, bool> keepRunning,
         CancellationToken cancellationToken)
     {
-        var response = await checkAsync().ConfigureAwait(false);
-        var retry = 0;
-        while (keepRunning(response) && retry < timeoutInSeconds / WaitTimeInSeconds)
-        {
-            await Task.Delay(TimeSpan.FromSeconds(WaitTimeInSeconds), cancellationToken).ConfigureAwait(false);
+        var timeoutCancellationSource = new CancellationTokenSource();
+        timeoutCancellationSource.CancelAfter(timeoutInSeconds * 1000);
 
-            response = await checkAsync().ConfigureAwait(false);
+        var cancellation = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutCancellationSource.Token);
+        
+        var response = await checkAsync(cancellation.Token).ConfigureAwait(false);
+        
+        while (keepRunning(response))
+        {
+            await Task.Delay(TimeSpan.FromSeconds(WaitTimeInSeconds), cancellation.Token).ConfigureAwait(false);
+
+            response = await checkAsync(cancellation.Token).ConfigureAwait(false);
         }
 
         return response;
