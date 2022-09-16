@@ -1,5 +1,4 @@
-﻿using AnyOfTypes.Newtonsoft.Json;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Replicate.Net.Client;
 using Replicate.Net.Factory;
 using Replicate.Net.Predictions;
@@ -61,10 +60,10 @@ async Task RunOnPredictionsAsync()
         }
     };
 
-    var predictions = await client.GetPredictionsAsync().ConfigureAwait(false);
-    Console.WriteLine("predictions = {0}", predictions.Results?.Count);
+    var predictions = await client.GetAllPredictionsAsync().ConfigureAwait(false);
+    Console.WriteLine("predictions = {0}", predictions?.Count);
 
     var response = await client.CreatePredictionAndWaitOnResultAsync(request).ConfigureAwait(false);
 
-    Console.WriteLine(JsonConvert.SerializeObject(response, Formatting.Indented, new AnyOfJsonConverter()));
+    Console.WriteLine(JsonConvert.SerializeObject(response, Formatting.Indented));
 }

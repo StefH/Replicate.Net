@@ -30,5 +30,11 @@ public interface IReplicateApi
     Task<Result> GetPredictionAsync([Path] string predictionId, CancellationToken cancellationToken = default);
 
     [Get("predictions")]
-    Task<Predictions.Predictions> GetPredictionsAsync(CancellationToken cancellationToken = default);
+    Task<PredictionsResult> GetPredictionsAsync(CancellationToken cancellationToken = default);
+
+    [Get("predictions")]
+    Task<PredictionsResult> GetPredictionsAsync([Query] string cursor, CancellationToken cancellationToken = default);
+
+    [Get("{url}")]
+    Task<PredictionsResult> GetPredictionsByUrlAsync([Path(UrlEncode = false)] string url, CancellationToken cancellationToken = default);
 }

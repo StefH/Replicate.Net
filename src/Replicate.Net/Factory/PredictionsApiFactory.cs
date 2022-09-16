@@ -1,7 +1,4 @@
 ﻿using System;
-using AnyOfTypes.Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 using Replicate.Net.Client;
 using RestEase;
@@ -15,7 +12,7 @@ public class ReplicateApiFactory : IReplicateApiFactory
 
     private static readonly JsonSerializerSettings Settings = new()
     {
-        Converters = { new AnyOfJsonConverter() }
+        // Converters = { new AnyOfJsonConverter() }
     };
 
 

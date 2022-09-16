@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <Version>0.0.1</Version>
+        <Version>0.0.2</Version>
         <TargetFrameworks>net6.0;netstandard2.1;netstandard2.0</TargetFrameworks>
         <Authors>Stef Heyenrath</Authors>
         <Title>Replicate.Net</Title>
@@ -26,12 +26,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="AnyOf" Version="0.3.0" />
-        <PackageReference Include="AnyOf.Newtonsoft.Json" Version="0.3.1" />
-        <!--<PackageReference Include="IsExternalInit" Version="1.0.3">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>-->
+        <!--<PackageReference Include="AnyOf" Version="0.3.0" />
+        <PackageReference Include="AnyOf.Newtonsoft.Json" Version="0.3.1" />-->
         <PackageReference Include="RestEase" Version="1.5.7" />
         <PackageReference Include="Stef.Validation" Version="0.1.0" />
     </ItemGroup>

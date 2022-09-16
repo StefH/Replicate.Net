@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,6 +38,31 @@ public static class IReplicateApiExtensions
         );
     }
 
+    public static async Task<IReadOnlyList<Result>?> GetAllPredictionsAsync(this IReplicateApi api, CancellationToken cancellationToken = default)
+    {
+        Guard.NotNull(api);
+
+        var predictionsResult = await api.GetPredictionsAsync(cancellationToken).ConfigureAwait(false);
+        if (predictionsResult.Results is null)
+        {
+            return null;
+        }
+
+        var results = predictionsResult.Results.ToList();
+        while (predictionsResult.Next is not null)
+        {
+            predictionsResult = await api.GetPredictionsByUrlAsync(predictionsResult.Next, cancellationToken).ConfigureAwait(false);
+            if (predictionsResult.Results is null)
+            {
+                break;
+            }
+
+            results.AddRange(predictionsResult.Results);
+        }
+
+        return results;
+    }
+
     private static async Task<T> CallAsync<T>(
         int timeoutInSeconds,
         Func<CancellationToken, Task<T>> checkAsync,
@@ -47,9 +73,9 @@ public static class IReplicateApiExtensions
         timeoutCancellationSource.CancelAfter(timeoutInSeconds * 1000);
 
         var cancellation = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutCancellationSource.Token);
-        
+
         var response = await checkAsync(cancellation.Token).ConfigureAwait(false);
-        
+
         while (keepRunning(response))
         {
             await Task.Delay(TimeSpan.FromSeconds(WaitTimeInSeconds), cancellation.Token).ConfigureAwait(false);

@@ -1,6 +1,7 @@
 ﻿using System;
-using AnyOfTypes;
+using System.Linq;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Replicate.Net.Predictions;
 
@@ -28,10 +29,22 @@ public class Result
     public string Status { get; set; } = null!;
 
     public Input Input { get; set; } = null!;
-
+    
     public object? Output { get; set; }
 
-    //public object? Output { get; set; } // string or string[]
+    [JsonIgnore]
+    public string[]? GeneratedPictures
+    {
+        get
+        {
+            return Output switch
+            {
+                JArray pictures => pictures.Values<string>().ToArray(),
+                string picture => new[] { picture },
+                _ => null
+            };
+        }
+    }
 
     public object? Error { get; set; }
 

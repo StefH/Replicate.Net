@@ -2,7 +2,7 @@
 
 namespace Replicate.Net.Predictions;
 
-public class Predictions
+public class PredictionsResult
 {
     public string? Next { get; set; }
 
