@@ -6,7 +6,7 @@
     <Authors>Stef Heyenrath</Authors>
     <Title>Replicate.Net</Title>
     <PackageId>Replicate.Net</PackageId>
-    <Description>A C# RestEase client for Replicate (A latent text-to-image diffusion model capable of generating photo-realistic images given any text input)</Description>
+    <Description>A C# RestEase client for Replicate: A latent text-to-image diffusion model capable of generating photo-realistic images given any text input.</Description>
     <PackageTags>RestEase;Client;Replicate;Predictions;text;image;text</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/StefH/Replicate.Net</PackageProjectUrl>
@@ -15,7 +15,6 @@
     <PackageIcon>icon.png</PackageIcon>
     <PackageReadmeFile>PackageReadme.md</PackageReadmeFile>
     <PackageReleaseNotes>$([System.IO.File]::ReadAllText("$(MSBuildProjectDirectory)/../../PackageReleaseNotes.txt"))</PackageReleaseNotes>
-    <None Include="../../PackageReadme.md" Pack="true" PackagePath="" />
     <LangVersion>10</LangVersion>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -26,6 +25,7 @@
 
   <ItemGroup>
     <None Include="../../resources/icon.png" Pack="true" PackagePath="" />
+    <None Include="../../PackageReadme.md" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <ItemGroup>
