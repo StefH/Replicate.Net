@@ -55,4 +55,7 @@ public interface IReplicateApi
     [Get("{url}")]
     Task<PagedResult<ModelVersion>> GetModelVersionsByUrlAsync([Path(UrlEncode = false)] string url, CancellationToken cancellationToken = default);
     #endregion
+
+    #region collections
+    #endregion
 }
