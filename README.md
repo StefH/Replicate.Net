@@ -16,7 +16,7 @@ var request = new Request
     Version = "a9758cbfbd5f3c2094457d996681af52552901775aa2d6dd0b17fd15df959bef",
     Input = new Input
     {
-        Prompt = "a gentleman cat with blue eyes in a 19th century portrait"
+        Prompt = "a gentleman cat with blue eyes wearing a tophat in a 19th century portrait"
     }
 };
 
