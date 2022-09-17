@@ -62,6 +62,5 @@ async Task RunOnPredictionsAsync()
         }
     };
     var response2 = await replicateApi.CreatePredictionAndWaitOnResultAsync(requestcjwbw).ConfigureAwait(false);
-
     Console.WriteLine(JsonConvert.SerializeObject(response2, settings));
 }
