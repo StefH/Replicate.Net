@@ -4,7 +4,6 @@ A C# RestEase client for Replicate (A latent text-to-image diffusion model capab
 ## Install
 [![NuGet Badge](https://buildstats.info/nuget/Replicate.Net)](https://www.nuget.org/packages/Replicate.Net)
 
-
 ## Example
 ``` c#
 var factory = new PredictionsApiFactory();

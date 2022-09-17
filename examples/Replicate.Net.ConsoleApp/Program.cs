@@ -28,18 +28,18 @@ catch (Exception e)
 
 async Task RunOnPredictionsAsync()
 {
-    var api = factory.GetApi(Environment.GetEnvironmentVariable("replicate_token")!);
+    var replicateApi = factory.GetApi(Environment.GetEnvironmentVariable("replicate_token")!);
     
-    var predictions = await api.GetAllPredictionsAsync().ConfigureAwait(false);
+    var predictions = await replicateApi.GetAllPredictionsAsync().ConfigureAwait(false);
     Console.WriteLine("predictions = {0}", predictions?.Count);
 
-    var model = await api.GetModelAsync("cjwbw", "stable-diffusion-high-resolution").ConfigureAwait(false);
+    var model = await replicateApi.GetModelAsync("cjwbw", "stable-diffusion-high-resolution").ConfigureAwait(false);
     Console.WriteLine(JsonConvert.SerializeObject(model, settings));
 
-    var modelVersions = await api.GetAllModelVersionsAsync("cjwbw", "stable-diffusion-high-resolution").ConfigureAwait(false);
+    var modelVersions = await replicateApi.GetAllModelVersionsAsync("cjwbw", "stable-diffusion-high-resolution").ConfigureAwait(false);
     Console.WriteLine("modelVersions = {0}", modelVersions?.Count);
 
-    var collections = await api.GetCollectionsAsync("super-resolution").ConfigureAwait(false);
+    var collections = await replicateApi.GetCollectionsAsync("super-resolution").ConfigureAwait(false);
     Console.WriteLine("collections = {0}", collections.Models?.Count);
 
     var requestStableDiffusion = new Request
@@ -50,7 +50,7 @@ async Task RunOnPredictionsAsync()
             Prompt = "a gentleman cat with blue eyes wearing a top-hat in a 19th century portrait"
         }
     };
-    var response1 = await api.CreatePredictionAndWaitOnResultAsync(requestStableDiffusion).ConfigureAwait(false);
+    var response1 = await replicateApi.CreatePredictionAndWaitOnResultAsync(requestStableDiffusion).ConfigureAwait(false);
     Console.WriteLine(JsonConvert.SerializeObject(response1, Formatting.Indented));
 
     var requestcjwbw = new Request
@@ -61,7 +61,7 @@ async Task RunOnPredictionsAsync()
             Prompt = "female cyborg assimilated by alien plants, intricate Two-point lighting portrait, by Ching Yeh and Greg Rutkowski, detailed cyberpunk in the style of GitS 1995"
         }
     };
-    var response2 = await api.CreatePredictionAndWaitOnResultAsync(requestcjwbw).ConfigureAwait(false);
+    var response2 = await replicateApi.CreatePredictionAndWaitOnResultAsync(requestcjwbw).ConfigureAwait(false);
 
     Console.WriteLine(JsonConvert.SerializeObject(response2, settings));
 }
