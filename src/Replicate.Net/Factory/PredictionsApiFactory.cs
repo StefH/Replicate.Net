@@ -1,5 +1,6 @@
 ﻿using System;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Replicate.Net.Client;
 using RestEase;
 using Stef.Validation;
@@ -12,9 +13,13 @@ public class ReplicateApiFactory : IReplicateApiFactory
 
     private static readonly JsonSerializerSettings Settings = new()
     {
-        // Converters = { new AnyOfJsonConverter() }
+        ContractResolver = new DefaultContractResolver
+        {
+            NamingStrategy = new SnakeCaseNamingStrategy(),
+        },
+        Formatting = Formatting.Indented,
+        NullValueHandling = NullValueHandling.Ignore
     };
-
 
     public IReplicateApi GetApi(Uri baseUrl, string? token = null)
     {

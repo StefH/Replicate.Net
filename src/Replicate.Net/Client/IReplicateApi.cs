@@ -49,7 +49,7 @@ public interface IReplicateApi
     [Get("models/{owner}/{name}/versions")]
     Task<PagedResult<ModelVersion>> GetModelVersionsAsync([Path] string owner, [Path] string name, CancellationToken cancellationToken = default);
 
-    [Get("models/{owner}/{name}/version/{id} ")]
+    [Get("models/{owner}/{name}/version/{id}")]
     Task<PagedResult<ModelVersion>> GetModelVersionAsync([Path] string owner, [Path] string name, [Path] string id, CancellationToken cancellationToken = default);
 
     [Get("{url}")]
@@ -57,5 +57,7 @@ public interface IReplicateApi
     #endregion
 
     #region collections
+    [Get("collections/{collectionSlug}")]
+    Task<Collections> GetCollectionsAsync([Path] string collectionSlug, CancellationToken cancellationToken = default);
     #endregion
 }

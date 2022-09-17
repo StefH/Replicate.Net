@@ -13,10 +13,8 @@ public class Prediction
 
     public PredictionUrls Urls { get; set; } = null!;
 
-    [JsonProperty("created_at")]
     public DateTime? CreatedAt { get; set; }
 
-    [JsonProperty("completed_at")]
     public DateTime? CompletedAt { get; set; }
 
     /// <summary>

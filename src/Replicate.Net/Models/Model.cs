@@ -1,5 +1,4 @@
 ﻿using System;
-using Newtonsoft.Json;
 
 namespace Replicate.Net.Models;
 
@@ -15,15 +14,11 @@ public class Model
 
     public string Visibility { get; set; } = null!;
 
-    [JsonProperty("github_url")]
-    public Uri GithubUrl { get; set; } = null!;
+    public Uri? GithubUrl { get; set; } = null!;
 
-    [JsonProperty("paper_url")]
-    public Uri PaperUrl { get; set; } = null!;
+    public Uri? PaperUrl { get; set; } = null!;
 
-    [JsonProperty("license_url")]
-    public Uri LicenseUrl { get; set; } = null!;
+    public Uri? LicenseUrl { get; set; } = null!;
 
-    [JsonProperty("latest_version")]
     public ModelVersion LatestVersion { get; set; } = null!;
 }
