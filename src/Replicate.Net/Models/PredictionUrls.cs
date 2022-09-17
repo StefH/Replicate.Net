@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Replicate.Net.Models.Predictions;
+namespace Replicate.Net.Models;
 
-public class Urls
+public class PredictionUrls
 {
     public Uri? Get { get; set; }
 

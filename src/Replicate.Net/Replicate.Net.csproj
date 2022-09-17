@@ -1,37 +1,33 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <Version>0.0.1</Version>
-        <TargetFrameworks>net6.0;netstandard2.1;netstandard2.0</TargetFrameworks>
-        <Authors>Stef Heyenrath</Authors>
-        <Title>Replicate.Net</Title>
-        <PackageId>Replicate.Net</PackageId>
-        <Description>A C# RestEase client for Replicate (A latent text-to-image diffusion model capable of generating photo-realistic images given any text input)</Description>
-        <PackageTags>RestEase;Client;Replicate;Predictions;text;image;text</PackageTags>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <PackageProjectUrl>https://github.com/StefH/Replicate.Net</PackageProjectUrl>
-        <RepositoryType>git</RepositoryType>
-        <RepositoryUrl>https://github.com/StefH/Replicate.Net</RepositoryUrl>
-        <PackageIcon>icon.png</PackageIcon>
-        <LangVersion>10</LangVersion>
-        <Nullable>enable</Nullable>
-    </PropertyGroup>
+  <PropertyGroup>
+    <Version>0.0.2</Version>
+    <TargetFrameworks>net6.0;netstandard2.1;netstandard2.0</TargetFrameworks>
+    <Authors>Stef Heyenrath</Authors>
+    <Title>Replicate.Net</Title>
+    <PackageId>Replicate.Net</PackageId>
+    <Description>A C# RestEase client for Replicate (A latent text-to-image diffusion model capable of generating photo-realistic images given any text input)</Description>
+    <PackageTags>RestEase;Client;Replicate;Predictions;text;image;text</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/StefH/Replicate.Net</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/StefH/Replicate.Net</RepositoryUrl>
+    <PackageIcon>icon.png</PackageIcon>
+    <LangVersion>10</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
 
-    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <None Include="../../resources/icon.png" Pack="true" PackagePath="" />
-    </ItemGroup>
+  <ItemGroup>
+    <None Include="../../resources/icon.png" Pack="true" PackagePath="" />
+  </ItemGroup>
 
-    <ItemGroup>
-        <PackageReference Include="IsExternalInit" Version="1.0.3">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
-        <PackageReference Include="RestEase" Version="1.5.7" />
-        <PackageReference Include="Stef.Validation" Version="0.1.0" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="RestEase" Version="1.5.7" />
+    <PackageReference Include="Stef.Validation" Version="0.1.0" />
+  </ItemGroup>
 
 </Project>
