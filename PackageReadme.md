@@ -1,8 +1,5 @@
-# Replicate.Net
+## Info
 A C# client (using [RestEase](https://github.com/canton7/RestEase)) for [Replicate](https://replicate.com): A latent text-to-image diffusion model capable of generating photo-realistic images given any text input.
-
-## Install
-[![NuGet Badge](https://buildstats.info/nuget/Replicate.Net)](https://www.nuget.org/packages/Replicate.Net)
 
 ## Example
 ``` c#
