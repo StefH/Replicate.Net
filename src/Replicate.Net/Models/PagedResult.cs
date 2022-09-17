@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 
-namespace Replicate.Net.Predictions;
+namespace Replicate.Net.Models;
 
-public class PredictionsResult
+public class PagedResult<T>
 {
     public string? Next { get; set; }
 
     public string? Previous { get; set; }
 
-    public IReadOnlyList<Result>? Results { get; set; }
+    public IReadOnlyList<T>? Results { get; set; }
 }

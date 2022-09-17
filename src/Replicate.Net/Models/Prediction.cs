@@ -3,15 +3,15 @@ using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Replicate.Net.Predictions;
+namespace Replicate.Net.Models;
 
-public class Result
+public class Prediction
 {
     public string Id { get; set; } = null!;
 
     public string Version { get; set; } = null!;
 
-    public Urls Urls { get; set; } = null!;
+    public PredictionUrls Urls { get; set; } = null!;
 
     [JsonProperty("created_at")]
     public DateTime? CreatedAt { get; set; }
@@ -28,8 +28,8 @@ public class Result
     /// </summary>
     public string Status { get; set; } = null!;
 
-    public Input Input { get; set; } = null!;
-    
+    public PredictionInput Input { get; set; } = null!;
+
     public object? Output { get; set; }
 
     [JsonIgnore]
@@ -50,5 +50,5 @@ public class Result
 
     public string? Logs { get; set; }
 
-    public Metrics Metrics { get; set; } = null!;
+    public PredictionMetrics Metrics { get; set; } = null!;
 }

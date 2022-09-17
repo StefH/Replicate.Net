@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Replicate.Net.Predictions;
+namespace Replicate.Net.Models;
 
 public class Request
 {
@@ -14,5 +14,5 @@ public class Request
     /// The model's input.
     /// </summary>
     [JsonProperty("input")]
-    public Input Input { get; set; } = null!;
+    public PredictionInput Input { get; set; } = null!;
 }

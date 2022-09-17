@@ -32,8 +32,4 @@
         <PackageReference Include="Stef.Validation" Version="0.1.0" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Models\" />
-    </ItemGroup>
-
 </Project>
