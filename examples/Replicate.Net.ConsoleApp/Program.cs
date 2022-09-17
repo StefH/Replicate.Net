@@ -61,7 +61,7 @@ async Task RunOnPredictionsAsync()
             Prompt = "female cyborg assimilated by alien plants, intricate Two-point lighting portrait, by Ching Yeh and Greg Rutkowski, detailed cyberpunk in the style of GitS 1995"
         }
     };
-    var response2 = await api.CreatePredictionAndWaitOnResultAsync(requestcjwbw, 10).ConfigureAwait(false);
+    var response2 = await api.CreatePredictionAndWaitOnResultAsync(requestcjwbw).ConfigureAwait(false);
 
     Console.WriteLine(JsonConvert.SerializeObject(response2, settings));
 }
