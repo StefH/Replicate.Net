@@ -42,16 +42,16 @@ async Task RunOnPredictionsAsync()
     var collections = await api.GetCollectionsAsync("super-resolution").ConfigureAwait(false);
     Console.WriteLine("collections = {0}", collections.Models?.Count);
 
-    //var requestStableDiffusion = new Request
-    //{
-    //    Version = "a9758cbfbd5f3c2094457d996681af52552901775aa2d6dd0b17fd15df959bef",
-    //    Input = new Input
-    //    {
-    //        Prompt = "a gentleman cat with blue eyes wearing a tophat in a 19th century portrait"
-    //    }
-    //};
-    //var response1 = await client.CreatePredictionAndWaitOnResultAsync(requestStableDiffusion).ConfigureAwait(false);
-    //Console.WriteLine(JsonConvert.SerializeObject(response1, Formatting.Indented));
+    var requestStableDiffusion = new Request
+    {
+        Version = "a9758cbfbd5f3c2094457d996681af52552901775aa2d6dd0b17fd15df959bef",
+        Input = new PredictionInput
+        {
+            Prompt = "a gentleman cat with blue eyes wearing a top-hat in a 19th century portrait"
+        }
+    };
+    var response1 = await api.CreatePredictionAndWaitOnResultAsync(requestStableDiffusion).ConfigureAwait(false);
+    Console.WriteLine(JsonConvert.SerializeObject(response1, Formatting.Indented));
 
     var requestcjwbw = new Request
     {

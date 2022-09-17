@@ -25,7 +25,7 @@ public class ReplicateApiFactory : IReplicateApiFactory
     {
         Guard.NotNull(baseUrl);
 
-        var client = new RestClient(baseUrl)
+        var api = new RestClient(baseUrl)
         {
             JsonSerializerSettings = Settings
         }
@@ -33,10 +33,10 @@ public class ReplicateApiFactory : IReplicateApiFactory
 
         if (!string.IsNullOrEmpty(token))
         {
-            client.Token = token;
+            api.Token = token;
         }
 
-        return client;
+        return api;
     }
 
     public IReplicateApi GetApi(string token)
