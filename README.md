@@ -1,4 +1,4 @@
-# Replicate.Net
+# ![Project Icon](https://raw.githubusercontent.com/StefH/Replicate.Net/main/resources/icon_32x32.png) Replicate.Net
 A C# client (using [RestEase](https://github.com/canton7/RestEase)) for [Replicate](https://replicate.com): A latent text-to-image diffusion model capable of generating photo-realistic images given any text input.
 
 ## Install
