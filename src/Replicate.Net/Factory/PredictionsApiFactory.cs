@@ -28,16 +28,22 @@ public class ReplicateApiFactory : IReplicateApiFactory
     {
         Guard.NotNull(baseUrl);
 
-        return new RestClient(
+        var authenticationHeaderValue = !string.IsNullOrEmpty(token) ?
+            new AuthenticationHeaderValue(ReplicateApiFactory.AuthenticationScheme, token) :
+            null;
+
+        return new RestClient
+        (
             baseUrl,
             (request, _) =>
             {
-                if (!string.IsNullOrEmpty(token))
+                if (authenticationHeaderValue is { })
                 {
-                    request.Headers.Authorization = new AuthenticationHeaderValue(AuthenticationScheme, token);
+                    request.Headers.Authorization = authenticationHeaderValue;
                 }
                 return Task.CompletedTask;
-            })
+            }
+        )
         {
             JsonSerializerSettings = Settings
         }

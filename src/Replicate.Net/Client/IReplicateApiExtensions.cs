@@ -44,7 +44,7 @@ public static class IReplicateApiExtensions
         Guard.NotNull(api);
 
         return await PageAsync
-        (   
+        (
             async () => await api.GetPredictionsAsync(cancellationToken).ConfigureAwait(false),
             async url => await api.GetPredictionsByUrlAsync(url, cancellationToken).ConfigureAwait(false)
         );

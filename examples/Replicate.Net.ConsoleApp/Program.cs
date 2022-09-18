@@ -47,6 +47,9 @@ async Task RunUsingDependencyInjectionAsync()
 
     var predictions = await replicateApi.GetAllPredictionsAsync().ConfigureAwait(false);
     Console.WriteLine("predictions = {0}", predictions?.Count);
+
+    var model = await replicateApi.GetModelAsync("cjwbw", "stable-diffusion-high-resolution").ConfigureAwait(false);
+    Console.WriteLine(JsonConvert.SerializeObject(model, settings));
 }
 
 // -------------------------------------------------------------------------------------------------------------

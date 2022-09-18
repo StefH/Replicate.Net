@@ -12,6 +12,7 @@ namespace Replicate.Net.Client;
 public interface IReplicateApi
 {
     #region predictions
+
     [Post("predictions/{predictionId}/cancel")]
     Task<Prediction> CancelPredictionAsync([Path] string predictionId, CancellationToken cancellationToken = default);
 
@@ -35,9 +36,11 @@ public interface IReplicateApi
 
     [Get("{url}")]
     Task<PagedResult<Prediction>> GetPredictionsByUrlAsync([Path(UrlEncode = false)] string url, CancellationToken cancellationToken = default);
-    #endregion
+
+    #endregion predictions
 
     #region models
+
     [Get("models/{owner}/{name}")]
     Task<Model> GetModelAsync([Path] string owner, [Path] string name, CancellationToken cancellationToken = default);
 
@@ -49,10 +52,13 @@ public interface IReplicateApi
 
     [Get("{url}")]
     Task<PagedResult<ModelVersion>> GetModelVersionsByUrlAsync([Path(UrlEncode = false)] string url, CancellationToken cancellationToken = default);
-    #endregion
+
+    #endregion models
 
     #region collections
+
     [Get("collections/{collectionSlug}")]
     Task<Collections> GetCollectionsAsync([Path] string collectionSlug, CancellationToken cancellationToken = default);
-    #endregion
+
+    #endregion collections
 }
