@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Replicate.Net.Client;
@@ -9,13 +11,14 @@ namespace Replicate.Net.Factory;
 
 public class ReplicateApiFactory : IReplicateApiFactory
 {
-    private static readonly Uri PredictionBaseUrl = new("https://api.replicate.com/v1");
+    public const string AuthenticationScheme = "Token";
+    public static readonly Uri PredictionBaseUrl = new("https://api.replicate.com/v1");
 
-    private static readonly JsonSerializerSettings Settings = new()
+    public static readonly JsonSerializerSettings Settings = new()
     {
         ContractResolver = new DefaultContractResolver
         {
-            NamingStrategy = new SnakeCaseNamingStrategy(),
+            NamingStrategy = new SnakeCaseNamingStrategy()
         },
         Formatting = Formatting.Indented,
         NullValueHandling = NullValueHandling.Ignore
@@ -25,18 +28,20 @@ public class ReplicateApiFactory : IReplicateApiFactory
     {
         Guard.NotNull(baseUrl);
 
-        var api = new RestClient(baseUrl)
+        return new RestClient(
+            baseUrl,
+            (request, _) =>
+            {
+                if (!string.IsNullOrEmpty(token))
+                {
+                    request.Headers.Authorization = new AuthenticationHeaderValue(AuthenticationScheme, token);
+                }
+                return Task.CompletedTask;
+            })
         {
             JsonSerializerSettings = Settings
         }
         .For<IReplicateApi>();
-
-        if (!string.IsNullOrEmpty(token))
-        {
-            api.Token = token;
-        }
-
-        return api;
     }
 
     public IReplicateApi GetApi(string token)

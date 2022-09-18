@@ -11,11 +11,6 @@ namespace Replicate.Net.Client;
 [Header(HeaderKey.UserAgent, HeaderValue.UserAgent)]
 public interface IReplicateApi
 {
-    #region authorization
-    [Header("Authorization", Format = "Token {0}")]
-    string? Token { get; set; }
-    #endregion
-
     #region predictions
     [Post("predictions/{predictionId}/cancel")]
     Task<Prediction> CancelPredictionAsync([Path] string predictionId, CancellationToken cancellationToken = default);

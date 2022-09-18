@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Replicate.Net.Client;
 using Replicate.Net.Factory;
@@ -13,11 +14,20 @@ var settings = new JsonSerializerSettings
     Formatting = Formatting.Indented
 };
 
-var factory = new ReplicateApiFactory();
+var token = Environment.GetEnvironmentVariable("replicate_token")!;
 
 try
 {
-    await RunOnPredictionsAsync().ConfigureAwait(false);
+    await RunUsingDependencyInjectionAsync().ConfigureAwait(false);
+}
+catch (Exception e)
+{
+    Console.WriteLine(e);
+}
+
+try
+{
+    await RunUsingFactoryAsync().ConfigureAwait(false);
 }
 catch (Exception e)
 {
@@ -25,11 +35,27 @@ catch (Exception e)
 }
 
 // -------------------------------------------------------------------------------------------------------------
-
-async Task RunOnPredictionsAsync()
+async Task RunUsingDependencyInjectionAsync()
 {
-    var replicateApi = factory.GetApi(Environment.GetEnvironmentVariable("replicate_token")!);
-    
+    var services = new ServiceCollection();
+
+    services.AddReplicateClient(token);
+
+    var provider = services.BuildServiceProvider();
+
+    var replicateApi = provider.GetRequiredService<IReplicateApi>();
+
+    var predictions = await replicateApi.GetAllPredictionsAsync().ConfigureAwait(false);
+    Console.WriteLine("predictions = {0}", predictions?.Count);
+}
+
+// -------------------------------------------------------------------------------------------------------------
+async Task RunUsingFactoryAsync()
+{
+    var factory = new ReplicateApiFactory();
+
+    var replicateApi = factory.GetApi(token);
+
     var predictions = await replicateApi.GetAllPredictionsAsync().ConfigureAwait(false);
     Console.WriteLine("predictions = {0}", predictions?.Count);
 
@@ -41,6 +67,8 @@ async Task RunOnPredictionsAsync()
 
     var collections = await replicateApi.GetCollectionsAsync("super-resolution").ConfigureAwait(false);
     Console.WriteLine("collections = {0}", collections.Models?.Count);
+
+    return;
 
     var requestStableDiffusion = new Request
     {
