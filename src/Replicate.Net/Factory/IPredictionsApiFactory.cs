@@ -6,6 +6,6 @@ namespace Replicate.Net.Factory;
 public interface IReplicateApiFactory
 {
     IReplicateApi GetApi(Uri baseUrl, string? token = null);
-    
+
     IReplicateApi GetApi(string token);
 }

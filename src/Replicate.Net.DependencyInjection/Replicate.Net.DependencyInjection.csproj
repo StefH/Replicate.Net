@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Replicate.Net.DependencyInjection</Title>
+    <PackageId>Replicate.Net.DependencyInjection</PackageId>
+    <Description>DependencyInjection for Replicate.Net</Description>
+    <PackageTags>RestEase;Client;Replicate;Predictions;text;image;text;DependencyInjection</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="../../PackageReadmeDI.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="RestEase.HttpClientFactory" Version="1.5.7" />
+    <PackageReference Include="Stef.Validation.Options" Version="0.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Replicate.Net\Replicate.Net.csproj" />
+  </ItemGroup>
+
+</Project>
