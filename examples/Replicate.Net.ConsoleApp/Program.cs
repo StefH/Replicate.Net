@@ -39,7 +39,10 @@ async Task RunUsingDependencyInjectionAsync()
 {
     var services = new ServiceCollection();
 
-    services.AddReplicateClient(token);
+    services.AddReplicateClient(options =>
+    {
+        options.Token = token;
+    });
 
     var provider = services.BuildServiceProvider();
 

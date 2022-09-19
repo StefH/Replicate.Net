@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Replicate.Net.Client;
+using Replicate.Net.DependencyInjection.Options;
 using Replicate.Net.Factory;
 using RestEase.HttpClientFactory;
 using Stef.Validation;
 
+// ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection;
 
-// ReSharper disable once InconsistentNaming
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddReplicateClient(this IServiceCollection services, Uri baseUrl, string? token = null)
     {
         Guard.NotNull(services);
-        Guard.NotNull(baseUrl);
 
-        AddRestEaseClientInternal(services, baseUrl, token);
+        AddRestEaseClientInternal(services, new ReplicateClientOptions { BaseUrl = baseUrl, Token = token });
 
         return services;
     }
@@ -26,19 +27,49 @@ public static class ServiceCollectionExtensions
         Guard.NotNull(services);
         Guard.NotNull(token);
 
-        AddRestEaseClientInternal(services, ReplicateApiFactory.PredictionBaseUrl, token);
+        AddRestEaseClientInternal(services, new ReplicateClientOptions { BaseUrl = ReplicateApiFactory.PredictionBaseUrl, Token = token });
 
         return services;
     }
 
-    private static void AddRestEaseClientInternal(IServiceCollection services, Uri baseUrl, string? token)
+    public static IServiceCollection AddReplicateClient(this IServiceCollection services, IConfigurationSection section)
     {
-        var authenticationHeaderValue = !string.IsNullOrEmpty(token) ?
-            new AuthenticationHeaderValue(ReplicateApiFactory.AuthenticationScheme, token) :
+        Guard.NotNull(services);
+        Guard.NotNull(section);
+
+        var options = new ReplicateClientOptions();
+        section.Bind(options);
+
+        AddRestEaseClientInternal(services, options);
+
+        return services;
+    }
+
+    public static IServiceCollection AddReplicateClient(this IServiceCollection services, Action<ReplicateClientOptions> optionBuilder)
+    {
+        Guard.NotNull(services);
+        Guard.NotNull(optionBuilder);
+
+        var options = new ReplicateClientOptions();
+        optionBuilder(options);
+
+        AddRestEaseClientInternal(services, options);
+
+        return services;
+    }
+
+    public static void AddRestEaseClientInternal(IServiceCollection services, ReplicateClientOptions options)
+    {
+        Guard.NotNull(options);
+
+        services.AddOptionsWithDataAnnotationValidation(options);
+
+        var authenticationHeaderValue = !string.IsNullOrEmpty(options.Token) ?
+            new AuthenticationHeaderValue(ReplicateApiFactory.AuthenticationScheme, options.Token) :
             null;
 
         services.AddRestEaseClient<IReplicateApi>(
-            baseUrl,
+            options.BaseUrl,
             client =>
             {
                 client.JsonSerializerSettings = ReplicateApiFactory.Settings;

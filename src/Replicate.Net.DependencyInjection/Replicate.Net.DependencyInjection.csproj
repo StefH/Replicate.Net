@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="RestEase.HttpClientFactory" Version="1.5.7" />
+    <PackageReference Include="Stef.Validation.Options" Version="0.1.0" />
   </ItemGroup>
 
   <ItemGroup>
