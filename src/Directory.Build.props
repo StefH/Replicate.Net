@@ -8,7 +8,6 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/StefH/Replicate.Net</RepositoryUrl>
     <PackageIcon>icon.png</PackageIcon>
-    <PackageReadmeFile>PackageReadme.md</PackageReadmeFile>
     <PackageReleaseNotes>$([System.IO.File]::ReadAllText("$(MSBuildProjectDirectory)/../../PackageReleaseNotes.txt"))</PackageReleaseNotes>
     <LangVersion>10</LangVersion>
     <Nullable>enable</Nullable>
