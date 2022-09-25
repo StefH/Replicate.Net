@@ -15,10 +15,11 @@ namespace Replicate.Net.WinFormsApp
 		{
 			btnGenerate.Enabled = false;
 			txtPrompt.Enabled = false;
-			picture1.ImageLocation = string.Empty;
-			picture2.ImageLocation = string.Empty;
-			picture3.ImageLocation = string.Empty;
-			picture4.ImageLocation = string.Empty;
+
+			picture1.Image = Resources.Spinner_512;
+			picture2.Image = Resources.Spinner_512;
+			picture3.Image = Resources.Spinner_512;
+			picture4.Image = Resources.Spinner_512;
 
 			try
 			{
@@ -35,8 +36,6 @@ namespace Replicate.Net.WinFormsApp
 				if (prediction is not null && prediction.GeneratedPictures is not null)
 				{
 					picture1.ImageLocation = prediction.GeneratedPictures[0];
-					picture1.Refresh();
-
 					picture2.ImageLocation = prediction.GeneratedPictures[1];
 					picture3.ImageLocation = prediction.GeneratedPictures[2];
 					picture4.ImageLocation = prediction.GeneratedPictures[3];
