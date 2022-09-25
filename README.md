@@ -36,3 +36,7 @@ var replicateApi = // injected
 
 // Now call the api
 ```
+
+## Example WinForms application
+
+![example-winform](./Resources/example-winform.png)
