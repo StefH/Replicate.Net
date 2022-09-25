@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Replicate.Net.DependencyInj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Replicate.Net.BlazorApp", "examples\Replicate.Net.BlazorApp\Replicate.Net.BlazorApp.csproj", "{A7B0DCE6-ADF9-4CEC-9C96-02ED0C4915B2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Replicate.Net.WinFormsApp", "examples\Replicate.Net.WinFormsApp\Replicate.Net.WinFormsApp.csproj", "{77BBE1F1-4865-45B2-859F-9A5179A29591}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{A7B0DCE6-ADF9-4CEC-9C96-02ED0C4915B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7B0DCE6-ADF9-4CEC-9C96-02ED0C4915B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7B0DCE6-ADF9-4CEC-9C96-02ED0C4915B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77BBE1F1-4865-45B2-859F-9A5179A29591}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77BBE1F1-4865-45B2-859F-9A5179A29591}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77BBE1F1-4865-45B2-859F-9A5179A29591}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77BBE1F1-4865-45B2-859F-9A5179A29591}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,6 +64,7 @@ Global
 		{3CD3237A-FD15-4317-A4C8-ACB91073A881} = {880EAF75-ABA7-47CF-B3A8-785E8CB7B012}
 		{8448BF9E-D0B7-46B6-9622-5FA6D2C321AC} = {520CF836-6EB6-4BEB-B846-5AC3F69C94FB}
 		{A7B0DCE6-ADF9-4CEC-9C96-02ED0C4915B2} = {880EAF75-ABA7-47CF-B3A8-785E8CB7B012}
+		{77BBE1F1-4865-45B2-859F-9A5179A29591} = {880EAF75-ABA7-47CF-B3A8-785E8CB7B012}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9D299DEB-D393-47D2-BA59-74B61D5902FE}
