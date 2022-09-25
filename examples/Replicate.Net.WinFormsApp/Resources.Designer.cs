@@ -69,15 +69,5 @@ namespace Replicate.Net.WinFormsApp {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Loading_512 {
-            get {
-                object obj = ResourceManager.GetObject("Loading_512", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
     }
 }
