@@ -16,10 +16,10 @@ namespace Replicate.Net.WinFormsApp
 			btnGenerate.Enabled = false;
 			txtPrompt.Enabled = false;
 
-			picture1.Image = Resources.Spinner_512;
-			picture2.Image = Resources.Spinner_512;
-			picture3.Image = Resources.Spinner_512;
-			picture4.Image = Resources.Spinner_512;
+			picture1.Image = Resources.Loading;
+			picture2.Image = Resources.Loading;
+			picture3.Image = Resources.Loading;
+			picture4.Image = Resources.Loading;
 
 			try
 			{
