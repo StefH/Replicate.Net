@@ -42,9 +42,9 @@
 			// 
 			// btnGenerate
 			// 
-			this.btnGenerate.Location = new System.Drawing.Point(1201, 43);
+			this.btnGenerate.Location = new System.Drawing.Point(999, 46);
 			this.btnGenerate.Name = "btnGenerate";
-			this.btnGenerate.Size = new System.Drawing.Size(112, 34);
+			this.btnGenerate.Size = new System.Drawing.Size(112, 59);
 			this.btnGenerate.TabIndex = 0;
 			this.btnGenerate.Text = "Generate";
 			this.btnGenerate.UseVisualStyleBackColor = true;
@@ -54,7 +54,7 @@
 			// 
 			this.picture1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.picture1.ImageLocation = "";
-			this.picture1.Location = new System.Drawing.Point(52, 220);
+			this.picture1.Location = new System.Drawing.Point(41, 142);
 			this.picture1.Name = "picture1";
 			this.picture1.Size = new System.Drawing.Size(512, 512);
 			this.picture1.TabIndex = 1;
@@ -63,8 +63,9 @@
 			// txtPrompt
 			// 
 			this.txtPrompt.Location = new System.Drawing.Point(41, 46);
+			this.txtPrompt.Multiline = true;
 			this.txtPrompt.Name = "txtPrompt";
-			this.txtPrompt.Size = new System.Drawing.Size(1123, 31);
+			this.txtPrompt.Size = new System.Drawing.Size(913, 59);
 			this.txtPrompt.TabIndex = 2;
 			this.txtPrompt.Text = "multicolor hyperspace";
 			// 
@@ -72,7 +73,7 @@
 			// 
 			this.picture2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.picture2.ImageLocation = "";
-			this.picture2.Location = new System.Drawing.Point(619, 220);
+			this.picture2.Location = new System.Drawing.Point(599, 142);
 			this.picture2.Name = "picture2";
 			this.picture2.Size = new System.Drawing.Size(512, 512);
 			this.picture2.TabIndex = 3;
@@ -82,7 +83,7 @@
 			// 
 			this.picture3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.picture3.ImageLocation = "";
-			this.picture3.Location = new System.Drawing.Point(52, 787);
+			this.picture3.Location = new System.Drawing.Point(41, 697);
 			this.picture3.Name = "picture3";
 			this.picture3.Size = new System.Drawing.Size(512, 512);
 			this.picture3.TabIndex = 4;
@@ -92,7 +93,7 @@
 			// 
 			this.picture4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.picture4.ImageLocation = "";
-			this.picture4.Location = new System.Drawing.Point(619, 787);
+			this.picture4.Location = new System.Drawing.Point(599, 697);
 			this.picture4.Name = "picture4";
 			this.picture4.Size = new System.Drawing.Size(512, 512);
 			this.picture4.TabIndex = 5;
@@ -102,7 +103,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1353, 1383);
+			this.ClientSize = new System.Drawing.Size(1147, 1242);
 			this.Controls.Add(this.picture4);
 			this.Controls.Add(this.picture3);
 			this.Controls.Add(this.picture2);
@@ -110,7 +111,7 @@
 			this.Controls.Add(this.picture1);
 			this.Controls.Add(this.btnGenerate);
 			this.Name = "MainForm";
-			this.Text = "Form1";
+			this.Text = "MainForm";
 			((System.ComponentModel.ISupportInitialize)(this.picture1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.picture2)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.picture3)).EndInit();
