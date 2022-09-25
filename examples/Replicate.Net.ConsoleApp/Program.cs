@@ -14,11 +14,22 @@ var settings = new JsonSerializerSettings
     Formatting = Formatting.Indented
 };
 
+try
+{
+    await RunOnInPainterVercelAppUsingFactoryAsync().ConfigureAwait(false);
+}
+catch (Exception e)
+{
+    Console.WriteLine(e);
+}
+
+return;
+
 var token = Environment.GetEnvironmentVariable("replicate_token")!;
 
 try
 {
-    await RunUsingDependencyInjectionAsync().ConfigureAwait(false);
+    await RunOnReplicateUsingDependencyInjectionAsync().ConfigureAwait(false);
 }
 catch (Exception e)
 {
@@ -27,7 +38,7 @@ catch (Exception e)
 
 try
 {
-    await RunUsingFactoryAsync().ConfigureAwait(false);
+    await RunOnReplicateUsingFactoryAsync().ConfigureAwait(false);
 }
 catch (Exception e)
 {
@@ -35,7 +46,23 @@ catch (Exception e)
 }
 
 // -------------------------------------------------------------------------------------------------------------
-async Task RunUsingDependencyInjectionAsync()
+async Task RunOnInPainterVercelAppUsingFactoryAsync()
+{
+    var factory = new InPainterApiFactory();
+
+    var api = factory.GetApi();
+
+    var input = new PredictionInput
+    {
+        Prompt = "Artificial intelligence female face android, high detail graphics, cinematic lights, 4k, artstation, hyperrealistic, intricate details, Powerful, Rim Lighting, Diffraction Grading, RTX, by Ivan Shishkin-2"
+    };
+
+    var response = await api.CreatePredictionAndWaitOnResultAsync(input).ConfigureAwait(false);
+    Console.WriteLine(JsonConvert.SerializeObject(response, Formatting.Indented));
+}
+
+// -------------------------------------------------------------------------------------------------------------
+async Task RunOnReplicateUsingDependencyInjectionAsync()
 {
     var services = new ServiceCollection();
 
@@ -56,7 +83,7 @@ async Task RunUsingDependencyInjectionAsync()
 }
 
 // -------------------------------------------------------------------------------------------------------------
-async Task RunUsingFactoryAsync()
+async Task RunOnReplicateUsingFactoryAsync()
 {
     var factory = new ReplicateApiFactory();
 

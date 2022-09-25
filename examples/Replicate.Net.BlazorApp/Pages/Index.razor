@@ -1,0 +1,49 @@
+﻿@page "/"
+
+@using Replicate.Net.BlazorApp.Models
+@using Replicate.Net.Factory
+@using Replicate.Net.Models
+@using Replicate.Net.Client;
+
+@inject ILogger<Index> Logger
+
+<PageTitle>Index</PageTitle>
+
+<EditForm Model="@inputModel" OnValidSubmit="@HandleValidSubmit">
+	<DataAnnotationsValidator />
+	<ValidationSummary />
+
+	<label>Prompt:</label>
+	<InputText id="prompt" @bind-Value="inputModel.Prompt" />
+
+	<button type="submit">Submit</button>
+</EditForm>
+
+@if (prediction is not null)
+{
+	<img src="@prediction.GeneratedPictures[0]" />
+}
+
+
+@code {
+	private InputModel inputModel = new();
+	private Prediction? prediction;
+
+	private async Task HandleValidSubmit()
+	{
+		Logger.LogInformation("HandleValidSubmit called");
+
+		prediction = null;
+
+		var factory = new InPainterApiFactory();
+
+		var api = factory.GetApi();
+
+		var input = new PredictionInput
+		{
+			Prompt = inputModel.Prompt!
+		};
+
+		prediction = await api.CreatePredictionAndWaitOnResultAsync(input).ConfigureAwait(false);
+	}
+}
