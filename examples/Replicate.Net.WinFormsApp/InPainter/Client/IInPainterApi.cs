@@ -1,7 +1,5 @@
-﻿using RestEase;
-using System.Threading.Tasks;
-using System.Threading;
-using Replicate.Net.Models;
+﻿using Replicate.Net.Models;
+using RestEase;
 
 namespace Replicate.Net.WinFormsApp.InPainter.Client
 {
