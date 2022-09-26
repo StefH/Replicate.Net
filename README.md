@@ -51,3 +51,4 @@ var replicateApi = // injected
 ### References
 - https://replicate.com
 - https://mpost.io/best-100-stable-diffusion-prompts-the-most-beautiful-ai-text-to-image-prompts/
+- https://github.com/joelparkerhenderson/stable-diffusion-image-prompt-gallery
