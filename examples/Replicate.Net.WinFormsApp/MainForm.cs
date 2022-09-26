@@ -1,6 +1,5 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Replicate.Net.Client;
 using Replicate.Net.Common.Example.Client;
 using Replicate.Net.Common.Example.Factory;
 using Replicate.Net.Models;
@@ -9,7 +8,7 @@ namespace Replicate.Net.WinFormsApp;
 
 public partial class MainForm : Form
 {
-    private readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings
+    private readonly JsonSerializerSettings _jsonSerializerSettings = new()
     {
         ContractResolver = new DefaultContractResolver
         {
@@ -20,7 +19,7 @@ public partial class MainForm : Form
 
     private Prediction? _prediction;
 
-    private PictureBox[] _pictureBoxes => Controls.OfType<PictureBox>().ToArray();
+    private PictureBox[] PictureBoxes => Controls.OfType<PictureBox>().ToArray();
 
     public MainForm()
     {
@@ -43,7 +42,7 @@ public partial class MainForm : Form
 
                 _prediction = await api.CreatePredictionAndWaitOnResultAsync(input);
 
-                if (_prediction is not null && _prediction.GeneratedPictures is not null)
+                if (_prediction?.GeneratedPictures is not null)
                 {
                     picture1.ImageLocation = _prediction.GeneratedPictures[0];
                     picture2.ImageLocation = _prediction.GeneratedPictures[1];
@@ -140,7 +139,7 @@ public partial class MainForm : Form
         {
             Execute(() =>
             {
-                foreach (var pictureBox in _pictureBoxes)
+                foreach (var pictureBox in PictureBoxes)
                 {
                     var imageFilename = BuildImageFileName(pictureBox);
                     pictureBox.Image.Save(Path.Combine(folderBrowserDialog.SelectedPath, imageFilename));
@@ -157,9 +156,9 @@ public partial class MainForm : Form
         ShowFolderBrowserDialog();
     }
 
-    private void SetImage(Bitmap image)
+    private void SetImage(Image image)
     {
-        foreach (var pictureBox in _pictureBoxes)
+        foreach (var pictureBox in PictureBoxes)
         {
             pictureBox.Image = image;
             pictureBox.ImageLocation = string.Empty;

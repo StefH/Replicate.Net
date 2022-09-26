@@ -4,38 +4,60 @@
              x:Class="Replicate.Net.MauiApp.MainPage">
 
     <ScrollView>
-        <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
+        <VerticalStackLayout Padding="10,10">
 
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50" />
-                    <RowDefinition Height="540" />
+                    <RowDefinition Height="520" />
+                    <RowDefinition Height="520" />
                     <RowDefinition Height="50" />
                 </Grid.RowDefinitions>
+
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="520" />
+                    <ColumnDefinition Width="520" />
+                    <ColumnDefinition Width="100" />
                 </Grid.ColumnDefinitions>
 
-                <Editor x:Name="txtPrompt" Text="multicolor hyperspace" />
+                <Editor Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        x:Name="txtPrompt" 
+                        Text="multicolor hyperspace" />
 
-                <Button
-                    x:Name="btnGenerate"
-                    Height="20"
-                    Text="Generate"
-                    Clicked="OnGenerateClicked"
-                    HorizontalOptions="End" />
+                <Button Grid.Column="2"
+                        x:Name="btnGenerate"
+                        Text="Generate"
+                        Clicked="OnGenerateClicked" />
+
+                <Image Grid.Row="1" Grid.Column="0"
+                       x:Name="picture0"
+                       Aspect="Center"
+                       WidthRequest="512"
+                       HeightRequest="512"
+                />
+
+                <Image Grid.Row="1" Grid.Column="1"
+                       x:Name="picture1"
+                       Aspect="Center"
+                       WidthRequest="512"
+                       HeightRequest="512"
+                />
+
+                <Image Grid.Row="2" Grid.Column="0"
+                       x:Name="picture2"
+                       Aspect="Center"
+                       WidthRequest="512"
+                       HeightRequest="512"
+                />
+
+                <Image Grid.Row="2" Grid.Column="1"
+                       x:Name="picture3"
+                       Aspect="Center"
+                       WidthRequest="512"
+                       HeightRequest="512"
+                />
             </Grid>
-
-
-            <!--<Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />-->
 
         </VerticalStackLayout>
     </ScrollView>

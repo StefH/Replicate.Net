@@ -1,24 +1,70 @@
-﻿namespace Replicate.Net.MauiApp
+﻿using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
+using Replicate.Net.Models;
+using Microsoft.Maui.Graphics;
+using Replicate.Net.Common.Example.Client;
+using Replicate.Net.Common.Example.Factory;
+
+namespace Replicate.Net.MauiApp;
+
+public partial class MainPage : ContentPage
 {
-    public partial class MainPage : ContentPage
+    private readonly JsonSerializerSettings _jsonSerializerSettings = new()
     {
-        int count = 0;
-
-        public MainPage()
+        ContractResolver = new DefaultContractResolver
         {
-            InitializeComponent();
-        }
+            NamingStrategy = new SnakeCaseNamingStrategy()
+        },
+        Formatting = Formatting.Indented
+    };
 
-        private void OnGenerateClicked(object sender, EventArgs e)
+    private Prediction? _prediction;
+
+    public MainPage()
+    {
+        InitializeComponent();
+    }
+
+    private async void OnGenerateClicked(object sender, EventArgs e)
+    {
+        SetLoading();
+
+        var api = new ExampleApiFactory().GetApi();
+
+        var input = new PredictionInput
         {
-            count++;
+            Prompt = txtPrompt.Text
+        };
 
-            //if (count == 1)
-            //    CounterBtn.Text = $"Clicked {count} time";
-            //else
-            //    CounterBtn.Text = $"Clicked {count} times";
+        try
+        {
+            _prediction = await api.CreatePredictionAndWaitOnResultAsync(input);
 
-            //SemanticScreenReader.Announce(CounterBtn.Text);
+            if (_prediction?.GeneratedPictures is not null)
+            {
+                picture0.Source = ImageSource.FromUri(new Uri(_prediction.GeneratedPictures[0]));
+                picture1.Source = ImageSource.FromUri(new Uri(_prediction.GeneratedPictures[1]));
+                picture2.Source = ImageSource.FromUri(new Uri(_prediction.GeneratedPictures[2]));
+                picture3.Source = ImageSource.FromUri(new Uri(_prediction.GeneratedPictures[3]));
+            }
+            else
+            {
+                SetError();
+            }
         }
+        catch
+        {
+            SetError();
+        }
+    }
+
+    private void SetLoading()
+    {
+        picture0.Source = picture1.Source = picture2.Source = picture3.Source = "loading.gif";
+    }
+
+    private void SetError()
+    {
+        picture0.Source = picture1.Source = picture2.Source = picture3.Source = "error.png";
     }
 }
