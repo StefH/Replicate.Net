@@ -43,7 +43,7 @@ var replicateApi = // injected
 
 ## Example WinForms application
 
-![example-winform](./Resources/example-winform.png)
+![example-winform](https://raw.githubusercontent.com/StefH/Replicate.Net/main/resources/example-winform.png)
 
 
 <hr>
