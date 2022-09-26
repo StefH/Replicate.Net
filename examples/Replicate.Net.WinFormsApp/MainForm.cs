@@ -1,3 +1,6 @@
+using System.Windows.Forms;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Replicate.Net.Client;
 using Replicate.Net.Models;
 using Replicate.Net.WinFormsApp.InPainter.Client;
@@ -7,6 +10,15 @@ namespace Replicate.Net.WinFormsApp;
 
 public partial class MainForm : Form
 {
+	private readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings
+	{
+		ContractResolver = new DefaultContractResolver
+		{
+			NamingStrategy = new SnakeCaseNamingStrategy()
+		},
+		Formatting = Formatting.Indented
+	};
+
 	private Prediction? _prediction;
 
 	private PictureBox[] _pictureBoxes => Controls.OfType<PictureBox>().ToArray();
@@ -119,7 +131,7 @@ public partial class MainForm : Form
 			Execute(() =>
 			{
 				pictureBox.Image.Save(saveFileDialog.FileName);
-				File.WriteAllText(Path.Combine(Path.GetDirectoryName(saveFileDialog.FileName)!, promptFileName), _prediction!.Input.Prompt);
+				SavePrompt(Path.Combine(Path.GetDirectoryName(saveFileDialog.FileName)!, promptFileName));
 			});
 		}
 	}
@@ -139,7 +151,7 @@ public partial class MainForm : Form
 				}
 
 				var promptFileName = BuildPromptFileName();
-				File.WriteAllText(Path.Combine(folderBrowserDialog.SelectedPath, promptFileName), _prediction!.Input.Prompt);
+				SavePrompt(Path.Combine(folderBrowserDialog.SelectedPath, promptFileName));
 			});
 		}
 	}
@@ -154,6 +166,7 @@ public partial class MainForm : Form
 		foreach (var pictureBox in _pictureBoxes)
 		{
 			pictureBox.Image = image;
+			pictureBox.ImageLocation = string.Empty;
 		}
 	}
 
@@ -162,6 +175,11 @@ public partial class MainForm : Form
 		btnGenerate.Enabled = show;
 		buttonSaveAll.Enabled = show;
 		txtPrompt.Enabled = show;
+	}
+
+	private void SavePrompt(string fileName)
+	{
+		File.WriteAllText(fileName, JsonConvert.SerializeObject(_prediction, _jsonSerializerSettings));
 	}
 
 	private void Execute(Action action)
