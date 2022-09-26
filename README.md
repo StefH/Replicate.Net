@@ -37,6 +37,17 @@ var replicateApi = // injected
 // Now call the api
 ```
 
+
+<hr>
+
+
 ## Example WinForms application
 
 ![example-winform](./Resources/example-winform.png)
+
+
+<hr>
+
+### References
+- https://replicate.com
+- https://mpost.io/best-100-stable-diffusion-prompts-the-most-beautiful-ai-text-to-image-prompts/

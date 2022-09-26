@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using Replicate.Net.Models;
 
-namespace Replicate.Net.Client
+namespace Replicate.Net.WinFormsApp.InPainter.Client
 {
     public interface IInPainterApi
     {

@@ -1,7 +1,7 @@
-using System.Drawing.Drawing2D;
 using Replicate.Net.Client;
-using Replicate.Net.Factory;
 using Replicate.Net.Models;
+using Replicate.Net.WinFormsApp.InPainter.Client;
+using Replicate.Net.WinFormsApp.InPainter.Factory;
 
 namespace Replicate.Net.WinFormsApp
 {
@@ -18,30 +18,35 @@ namespace Replicate.Net.WinFormsApp
 
 		private async void btnGenerate_Click(object sender, EventArgs e)
 		{
-			await ExecuteAsync(async () =>
-			{
-				SetLoading();
-
-				var factory = new InPainterApiFactory();
-				var api = factory.GetApi();
-
-				var input = new PredictionInput
+			await ExecuteAsync
+				(async () =>
 				{
-					Prompt = txtPrompt.Text
-				};
+					SetImage(Resources.Loading);
 
-				_prediction = await api.CreatePredictionAndWaitOnResultAsync(input);
+					var factory = new InPainterApiFactory();
+					var api = factory.GetApi();
 
-				if (_prediction is not null && _prediction.GeneratedPictures is not null)
-				{
-					picture1.ImageLocation = _prediction.GeneratedPictures[0];
-					picture2.ImageLocation = _prediction.GeneratedPictures[1];
-					picture3.ImageLocation = _prediction.GeneratedPictures[2];
-					picture4.ImageLocation = _prediction.GeneratedPictures[3];
-				}
+					var input = new PredictionInput
+					{
+						Prompt = txtPrompt.Text
+					};
 
-				Refresh();
-			});
+					_prediction = await api.CreatePredictionAndWaitOnResultAsync(input);
+
+					if (_prediction is not null && _prediction.GeneratedPictures is not null)
+					{
+						picture1.ImageLocation = _prediction.GeneratedPictures[0];
+						picture2.ImageLocation = _prediction.GeneratedPictures[1];
+						picture3.ImageLocation = _prediction.GeneratedPictures[2];
+						picture4.ImageLocation = _prediction.GeneratedPictures[3];
+					}
+					else
+					{
+						SetImage(Resources.Error);
+					}
+				},
+				() => SetImage(Resources.Error)
+			);
 		}
 
 		private void txtPrompt_TextChanged(object sender, EventArgs e)
@@ -88,9 +93,20 @@ namespace Replicate.Net.WinFormsApp
 			}
 		}
 
+		private string BuildImageFileName(PictureBox pictureBox)
+		{
+			return $"{_prediction!.Id}_{Path.GetFileName(pictureBox.ImageLocation)}";
+		}
+
+		private string BuildPromptFileName()
+		{
+			return $"{_prediction!.Id}_Prompt.txt";
+		}
+
 		private void ShowSaveFileDialog(PictureBox pictureBox)
 		{
-			var (imageFilename, promptFileName) = BuildFileNames(pictureBox);
+			var imageFilename = BuildImageFileName(pictureBox);
+			var promptFileName = BuildPromptFileName();
 			var saveFileDialog = new SaveFileDialog
 			{
 				Filter = @"PNG|*.png",
@@ -108,11 +124,6 @@ namespace Replicate.Net.WinFormsApp
 			}
 		}
 
-		private (string ImageFileName, string PromptFileName) BuildFileNames(PictureBox pictureBox)
-		{
-			return ($"{_prediction!.Id}_{Path.GetFileName(pictureBox.ImageLocation)}", $"{_prediction!.Id}_Prompt.txt");
-		}
-
 		private void ShowFolderBrowserDialog()
 		{
 			var folderBrowserDialog = new FolderBrowserDialog();
@@ -123,11 +134,13 @@ namespace Replicate.Net.WinFormsApp
 				{
 					foreach (var pictureBox in _pictureBoxes)
 					{
-						var (imageFilename, promptFileName) = BuildFileNames(pictureBox);
-
+						var imageFilename = BuildImageFileName(pictureBox);
 						pictureBox.Image.Save(Path.Combine(folderBrowserDialog.SelectedPath, imageFilename));
-						File.WriteAllText(Path.Combine(folderBrowserDialog.SelectedPath, promptFileName), _prediction!.Input.Prompt);
+
 					}
+
+					var promptFileName = BuildPromptFileName();
+					File.WriteAllText(Path.Combine(folderBrowserDialog.SelectedPath, promptFileName), _prediction!.Input.Prompt);
 				});
 			}
 		}
@@ -137,11 +150,11 @@ namespace Replicate.Net.WinFormsApp
 			ShowFolderBrowserDialog();
 		}
 
-		private void SetLoading()
+		private void SetImage(Bitmap image)
 		{
 			foreach (var pictureBox in _pictureBoxes)
 			{
-				pictureBox.Image = Resources.Loading;
+				pictureBox.Image = image;
 			}
 		}
 
@@ -165,16 +178,21 @@ namespace Replicate.Net.WinFormsApp
 			}
 		}
 
-		private async Task ExecuteAsync(Func<Task> action)
+		private async Task ExecuteAsync(Func<Task> action, Action error)
 		{
 			try
 			{
 				ToggleButtons(false);
 				await action();
 			}
+			catch
+			{
+				error();
+			}
 			finally
 			{
 				ToggleButtons(true);
+				Refresh();
 			}
 		}
 	}
