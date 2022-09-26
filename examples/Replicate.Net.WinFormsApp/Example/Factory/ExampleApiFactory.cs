@@ -1,13 +1,13 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Replicate.Net.WinFormsApp.InPainter.Client;
+using Replicate.Net.WinFormsApp.Example.Client;
 using RestEase;
 
-namespace Replicate.Net.WinFormsApp.InPainter.Factory;
+namespace Replicate.Net.WinFormsApp.Example.Factory;
 
-public class InPainterApiFactory : IInPainterApiFactory
+public class ExampleApiFactory : IExampleApiFactory
 {
-	public static readonly Uri PredictionBaseUrl = new("https://inpainter.vercel.app/api");
+	public static readonly Uri PredictionBaseUrl = new(Environment.GetEnvironmentVariable("ExamplePredictionBaseUrl")!);
 
 	public static readonly JsonSerializerSettings Settings = new()
 	{
@@ -19,12 +19,12 @@ public class InPainterApiFactory : IInPainterApiFactory
 		NullValueHandling = NullValueHandling.Ignore
 	};
 
-	public IInPainterApi GetApi()
+	public IExampleApi GetApi()
 	{
 		return new RestClient(PredictionBaseUrl)
 		{
 			JsonSerializerSettings = Settings
 		}
-		.For<IInPainterApi>();
+		.For<IExampleApi>();
 	}
 }

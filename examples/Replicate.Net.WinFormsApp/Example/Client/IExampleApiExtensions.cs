@@ -3,11 +3,11 @@ using Replicate.Net.Constants;
 using Replicate.Net.Models;
 using Stef.Validation;
 
-namespace Replicate.Net.WinFormsApp.InPainter.Client
+namespace Replicate.Net.WinFormsApp.Example.Client
 {
-	public static class IInPainterApiExtensions
+	public static class IExampleApiExtensions
 	{
-		public static async Task<Prediction> CreatePredictionAndWaitOnResultAsync(this IInPainterApi api, object inputAsObject, int timeoutInSeconds = 5 * 60, CancellationToken cancellationToken = default)
+		public static async Task<Prediction> CreatePredictionAndWaitOnResultAsync(this IExampleApi api, object inputAsObject, int timeoutInSeconds = 5 * 60, CancellationToken cancellationToken = default)
 		{
 			Guard.NotNull(api);
 			Guard.NotNull(inputAsObject);

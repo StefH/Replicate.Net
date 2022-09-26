@@ -1,9 +1,9 @@
 ﻿using Replicate.Net.Models;
 using RestEase;
 
-namespace Replicate.Net.WinFormsApp.InPainter.Client
+namespace Replicate.Net.WinFormsApp.Example.Client
 {
-    public interface IInPainterApi
+    public interface IExampleApi
     {
         [Post("predictions/{predictionId}/cancel")]
         Task<Prediction> CancelPredictionAsync([Path] string predictionId, CancellationToken cancellationToken = default);

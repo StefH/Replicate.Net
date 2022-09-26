@@ -35,15 +35,15 @@
 
 		prediction = null;
 
-		var factory = new InPainterApiFactory();
+		//var factory = new ExampleApiFactory();
 
-		var api = factory.GetApi();
+		//var api = factory.GetApi();
 
-		var input = new PredictionInput
-		{
-			Prompt = inputModel.Prompt!
-		};
+		//var input = new PredictionInput
+		//{
+		//	Prompt = inputModel.Prompt!
+		//};
 
-		prediction = await api.CreatePredictionAndWaitOnResultAsync(input).ConfigureAwait(false);
+		//prediction = await api.CreatePredictionAndWaitOnResultAsync(input).ConfigureAwait(false);
 	}
 }

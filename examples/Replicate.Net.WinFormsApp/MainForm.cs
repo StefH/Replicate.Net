@@ -1,10 +1,9 @@
-using System.Windows.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Replicate.Net.Client;
 using Replicate.Net.Models;
-using Replicate.Net.WinFormsApp.InPainter.Client;
-using Replicate.Net.WinFormsApp.InPainter.Factory;
+using Replicate.Net.WinFormsApp.Example.Client;
+using Replicate.Net.WinFormsApp.Example.Factory;
 
 namespace Replicate.Net.WinFormsApp;
 
@@ -35,8 +34,7 @@ public partial class MainForm : Form
 			{
 				SetImage(Resources.Loading);
 
-				var factory = new InPainterApiFactory();
-				var api = factory.GetApi();
+				var api = new ExampleApiFactory().GetApi();
 
 				var input = new PredictionInput
 				{
