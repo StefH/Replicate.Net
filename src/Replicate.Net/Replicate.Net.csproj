@@ -9,7 +9,18 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="Client\IInPainterApi.cs" />
+      <Compile Remove="Client\IInPainterApiExtensions.cs" />
+      <Compile Remove="Factory\IInPainterApiFactory.cs" />
+      <Compile Remove="Factory\InPainterApiFactory.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
         <None Include="../../PackageReadme.md" Pack="true" PackagePath="" />
     </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Replicate.Net.WinFormsApp" />
+  </ItemGroup>
 
 </Project>

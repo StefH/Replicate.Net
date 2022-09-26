@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Replicate.Net.Constants;
 using Replicate.Net.Models;
 using Stef.Validation;
 
@@ -12,7 +13,7 @@ namespace Replicate.Net.Client;
 public static class IReplicateApiExtensions
 {
     private const int WaitTimeInSeconds = 3;
-    private static readonly string[] RunningStates = { "starting", "processing" };
+    
 
     public static async Task<Prediction> CreatePredictionAndWaitOnResultAsync(this IReplicateApi api, object requestAsObject, int timeoutInSeconds = 5 * 60, CancellationToken cancellationToken = default)
     {
@@ -34,7 +35,7 @@ public static class IReplicateApiExtensions
             timeoutInSeconds,
             async ct => await api.GetPredictionAsync(createPredictionResponse.Id, ct).ConfigureAwait(false),
             async ct => await api.CancelPredictionAsync(createPredictionResponse.Id, ct).ConfigureAwait(false),
-            result => RunningStates.Any(s => string.Equals(s, result.Status, StringComparison.OrdinalIgnoreCase)),
+            result => ReplicateConstants.RunningStates.Any(s => string.Equals(s, result.Status, StringComparison.OrdinalIgnoreCase)),
             cancellationToken
         );
     }
@@ -84,7 +85,7 @@ public static class IReplicateApiExtensions
         return results;
     }
 
-    private static async Task<T> CallAsync<T>(
+    internal static async Task<T> CallAsync<T>(
         int timeoutInSeconds,
         Func<CancellationToken, Task<T>> checkAsync,
         Func<CancellationToken, Task<T>> cancelAsync,
