@@ -13,7 +13,6 @@ namespace Replicate.Net.Client;
 public static class IReplicateApiExtensions
 {
     private const int WaitTimeInSeconds = 3;
-    
 
     public static async Task<Prediction> CreatePredictionAndWaitOnResultAsync(this IReplicateApi api, object requestAsObject, int timeoutInSeconds = 5 * 60, CancellationToken cancellationToken = default)
     {

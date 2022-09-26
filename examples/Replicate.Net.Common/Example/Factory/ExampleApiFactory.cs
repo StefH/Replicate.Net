@@ -1,9 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Replicate.Net.WinFormsApp.Example.Client;
+using Replicate.Net.Common.Example.Client;
 using RestEase;
 
-namespace Replicate.Net.WinFormsApp.Example.Factory;
+namespace Replicate.Net.Common.Example.Factory;
 
 public class ExampleApiFactory : IExampleApiFactory
 {

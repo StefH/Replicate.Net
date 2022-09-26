@@ -1,7 +1,9 @@
-﻿using Replicate.Net.Models;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Replicate.Net.Models;
 using RestEase;
 
-namespace Replicate.Net.WinFormsApp.Example.Client
+namespace Replicate.Net.Common.Example.Client
 {
     public interface IExampleApi
     {
