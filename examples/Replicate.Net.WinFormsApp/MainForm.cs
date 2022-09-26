@@ -136,7 +136,6 @@ namespace Replicate.Net.WinFormsApp
 					{
 						var imageFilename = BuildImageFileName(pictureBox);
 						pictureBox.Image.Save(Path.Combine(folderBrowserDialog.SelectedPath, imageFilename));
-
 					}
 
 					var promptFileName = BuildPromptFileName();
