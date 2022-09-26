@@ -123,8 +123,7 @@ public partial class MainForm : Form
 			FileName = imageFilename
 		};
 
-		var result = saveFileDialog.ShowDialog();
-		if (result == DialogResult.OK)
+		if (DialogResult.OK == saveFileDialog.ShowDialog())
 		{
 			Execute(() =>
 			{
@@ -137,8 +136,7 @@ public partial class MainForm : Form
 	private void ShowFolderBrowserDialog()
 	{
 		var folderBrowserDialog = new FolderBrowserDialog();
-		var result = folderBrowserDialog.ShowDialog();
-		if (result == DialogResult.OK)
+		if (DialogResult.OK == folderBrowserDialog.ShowDialog())
 		{
 			Execute(() =>
 			{
