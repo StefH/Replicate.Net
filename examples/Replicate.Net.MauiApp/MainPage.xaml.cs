@@ -58,6 +58,11 @@ public partial class MainPage : ContentPage
         }
     }
 
+    private async void OnSaveAllClicked(object sender, EventArgs e)
+    {
+
+    }
+
     private void SetLoading()
     {
         picture0.Source = picture1.Source = picture2.Source = picture3.Source = "loading.gif";
