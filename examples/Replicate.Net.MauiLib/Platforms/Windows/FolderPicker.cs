@@ -4,6 +4,7 @@ namespace Replicate.Net.MauiLib.Platforms.Windows;
 
 /// <summary>
 /// https://github.com/jfversluis/MauiFolderPickerSample
+/// https://learn.microsoft.com/en-us/windows/uwp/files/quickstart-using-file-and-folder-pickers
 /// </summary>
 public class FolderPicker : IFolderPicker
 {
@@ -11,8 +12,8 @@ public class FolderPicker : IFolderPicker
     {
         var folderPicker = new WindowsFolderPicker();
 
-        // Might be needed to make it work on Windows 10
-        folderPicker.FileTypeFilter.Add("*.*");
+        // Needed to make it work on Windows 10
+        folderPicker.FileTypeFilter.Add("*");
 
         // Get the current window's HWND by passing in the Window object
         var hwnd = ((MauiWinUIWindow)Application.Current!.Windows[0].Handler.PlatformView!).WindowHandle;
