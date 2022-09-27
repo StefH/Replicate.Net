@@ -1,4 +1,5 @@
 ﻿using WindowsFolderPicker = Windows.Storage.Pickers.FolderPicker;
+using PickerLocationId = Windows.Storage.Pickers.PickerLocationId;
 
 namespace Replicate.Net.MauiLib.Platforms.Windows;
 
@@ -8,9 +9,16 @@ namespace Replicate.Net.MauiLib.Platforms.Windows;
 /// </summary>
 public class FolderPicker : IFolderPicker
 {
+    private string? _lastSelected;
+
     public async Task<string> PickFolderAsync()
     {
         var folderPicker = new WindowsFolderPicker();
+
+        //if (!string.IsNullOrEmpty(_lastSelected))
+        //{
+        //    folderPicker.SuggestedStartLocation = new PickerLocationId(_lastSelected);
+        //}
 
         // Needed to make it work on Windows 10
         folderPicker.FileTypeFilter.Add("*");
@@ -23,6 +31,8 @@ public class FolderPicker : IFolderPicker
 
         var result = await folderPicker.PickSingleFolderAsync();
 
-        return result?.Path;
+        _lastSelected = result.Path;
+
+        return _lastSelected;
     }
 }
