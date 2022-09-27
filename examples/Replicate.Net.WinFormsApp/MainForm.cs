@@ -1,7 +1,9 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Replicate.Net.Client;
 using Replicate.Net.Common.Example.Client;
 using Replicate.Net.Common.Example.Factory;
+using Replicate.Net.Factory;
 using Replicate.Net.Models;
 
 namespace Replicate.Net.WinFormsApp;
@@ -29,25 +31,18 @@ public partial class MainForm : Form
     private async void btnGenerate_Click(object sender, EventArgs e)
     {
         await ExecuteAsync
-            (async () =>
+        (
+            async () =>
             {
                 SetImage(Resources.Loading);
-
-                var api = new ExampleApiFactory().GetApi();
-
-                var input = new PredictionInput
-                {
-                    Prompt = txtPrompt.Text
-                };
-
-                _prediction = await api.CreatePredictionAndWaitOnResultAsync(input);
+                _prediction = await CreatePredictionAndWaitOnResultAsync();
 
                 if (_prediction?.GeneratedPictures is not null)
                 {
-                    picture1.ImageLocation = _prediction.GeneratedPictures[0];
-                    picture2.ImageLocation = _prediction.GeneratedPictures[1];
-                    picture3.ImageLocation = _prediction.GeneratedPictures[2];
-                    picture4.ImageLocation = _prediction.GeneratedPictures[3];
+                    picture0.ImageLocation = _prediction.GeneratedPictures[0];
+                    picture1.ImageLocation = _prediction.GeneratedPictures[1];
+                    picture2.ImageLocation = _prediction.GeneratedPictures[2];
+                    picture3.ImageLocation = _prediction.GeneratedPictures[3];
                 }
                 else
                 {
@@ -100,6 +95,51 @@ public partial class MainForm : Form
                 ShowSaveFileDialog(pictureBox);
                 break;
         }
+    }
+
+    private void cmdProvider_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        var cmd = (ComboBox)sender;
+
+        
+    }
+
+    private async Task<Prediction> CreatePredictionAndWaitOnResultAsync()
+    {
+        switch (cmdProvider.Text)
+        {
+            case "custom":
+                {
+                    var api = new ExampleApiFactory().GetApi();
+
+                    var input = new PredictionInput
+                    {
+                        Prompt = txtPrompt.Text
+                    };
+
+                    return await api.CreatePredictionAndWaitOnResultAsync(input);
+                }
+
+            case "replicate.com":
+                {
+                    var api = new ReplicateApiFactory().GetApi(Environment.GetEnvironmentVariable("replicate_token")!);
+
+                    var request = new Request
+                    {
+                        Version = "a9758cbfbd5f3c2094457d996681af52552901775aa2d6dd0b17fd15df959bef",
+                        Input = new PredictionInput
+                        {
+                            Prompt = txtPrompt.Text
+                        }
+                    };
+
+                    return await api.CreatePredictionAndWaitOnResultAsync(request);
+                }
+
+            default:
+                throw new InvalidCastException();
+        }
+        
     }
 
     private string BuildImageFileName(PictureBox pictureBox)
@@ -207,4 +247,6 @@ public partial class MainForm : Form
             Refresh();
         }
     }
+
+
 }
