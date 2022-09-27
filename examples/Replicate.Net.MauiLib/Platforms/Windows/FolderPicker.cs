@@ -1,15 +1,18 @@
-﻿using Replicate.Net.MauiLib;
-using WindowsFolderPicker = Windows.Storage.Pickers.FolderPicker;
+﻿using WindowsFolderPicker = Windows.Storage.Pickers.FolderPicker;
 
-namespace Replicate.Net.MauiApp.Platforms.Windows;
+namespace Replicate.Net.MauiLib.Platforms.Windows;
 
+/// <summary>
+/// https://github.com/jfversluis/MauiFolderPickerSample
+/// </summary>
 public class FolderPicker : IFolderPicker
 {
-    public async Task<string?> PickFolderAsync()
+    public async Task<string> PickFolderAsync()
     {
         var folderPicker = new WindowsFolderPicker();
+
         // Might be needed to make it work on Windows 10
-        folderPicker.FileTypeFilter.Add("*");
+        folderPicker.FileTypeFilter.Add("*.*");
 
         // Get the current window's HWND by passing in the Window object
         var hwnd = ((MauiWinUIWindow)Application.Current!.Windows[0].Handler.PlatformView!).WindowHandle;

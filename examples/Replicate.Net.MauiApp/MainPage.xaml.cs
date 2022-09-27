@@ -1,10 +1,9 @@
-﻿using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json;
-using Replicate.Net.Models;
-using Microsoft.Maui.Graphics;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Replicate.Net.Common.Example.Client;
 using Replicate.Net.Common.Example.Factory;
 using Replicate.Net.MauiLib;
+using Replicate.Net.Models;
 
 namespace Replicate.Net.MauiApp;
 
@@ -25,9 +24,9 @@ public partial class MainPage : ContentPage
 
     public MainPage(IFolderPicker folderPicker)
     {
-        _folderPicker = folderPicker;
-
         InitializeComponent();
+
+        _folderPicker = folderPicker;
     }
 
     private async void OnGenerateClicked(object sender, EventArgs e)

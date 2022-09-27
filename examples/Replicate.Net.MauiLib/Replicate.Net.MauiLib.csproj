@@ -17,4 +17,33 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
+	<ItemGroup>
+	  <Compile Remove="Platforms\Android\**" />
+	  <Compile Remove="Platforms\iOS\**" />
+	  <Compile Remove="Platforms\MacCatalyst\**" />
+	  <Compile Remove="Platforms\Tizen\**" />
+	  <EmbeddedResource Remove="Platforms\Android\**" />
+	  <EmbeddedResource Remove="Platforms\iOS\**" />
+	  <EmbeddedResource Remove="Platforms\MacCatalyst\**" />
+	  <EmbeddedResource Remove="Platforms\Tizen\**" />
+	  <MauiCss Remove="Platforms\Android\**" />
+	  <MauiCss Remove="Platforms\iOS\**" />
+	  <MauiCss Remove="Platforms\MacCatalyst\**" />
+	  <MauiCss Remove="Platforms\Tizen\**" />
+	  <MauiXaml Remove="Platforms\Android\**" />
+	  <MauiXaml Remove="Platforms\iOS\**" />
+	  <MauiXaml Remove="Platforms\MacCatalyst\**" />
+	  <MauiXaml Remove="Platforms\Tizen\**" />
+	  <None Remove="Platforms\Android\**" />
+	  <None Remove="Platforms\iOS\**" />
+	  <None Remove="Platforms\MacCatalyst\**" />
+	  <None Remove="Platforms\Tizen\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Platforms\Windows\FolderPicker.cs">
+	    <ExcludeFromCurrentConfiguration>false</ExcludeFromCurrentConfiguration>
+	  </Compile>
+	</ItemGroup>
+
 </Project>

@@ -1,4 +1,5 @@
 ﻿using Replicate.Net.MauiLib;
+using Replicate.Net.MauiLib.Platforms.Windows;
 
 namespace Replicate.Net.MauiApp;
 
@@ -15,7 +16,10 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
-        builder.Services.AddTransient<IFolderPicker, Platforms.Windows.FolderPicker>();
+        builder.Services.AddTransient<IFolderPicker, FolderPicker>();
+
+        builder.Services.AddTransient<MainPage>();
+        builder.Services.AddTransient<App>();
 
         return builder.Build();
     }
