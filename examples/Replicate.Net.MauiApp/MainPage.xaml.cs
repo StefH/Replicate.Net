@@ -4,6 +4,7 @@ using Replicate.Net.Models;
 using Microsoft.Maui.Graphics;
 using Replicate.Net.Common.Example.Client;
 using Replicate.Net.Common.Example.Factory;
+using Replicate.Net.MauiLib;
 
 namespace Replicate.Net.MauiApp;
 
@@ -18,10 +19,14 @@ public partial class MainPage : ContentPage
         Formatting = Formatting.Indented
     };
 
+    private readonly IFolderPicker _folderPicker;
+
     private Prediction? _prediction;
 
-    public MainPage()
+    public MainPage(IFolderPicker folderPicker)
     {
+        _folderPicker = folderPicker;
+
         InitializeComponent();
     }
 
@@ -60,7 +65,16 @@ public partial class MainPage : ContentPage
 
     private async void OnSaveAllClicked(object sender, EventArgs e)
     {
+        var folder = await _folderPicker.PickFolderAsync();
+        int x = 0;
+        //foreach (var pictureBox in PictureBoxes)
+        //{
+        //    var imageFilename = BuildImageFileName(pictureBox);
+        //    pictureBox.Image.Save(Path.Combine(folderBrowserDialog.SelectedPath, imageFilename));
+        //}
 
+        //var promptFileName = BuildPromptFileName();
+        //SavePrompt(Path.Combine(folderBrowserDialog.SelectedPath, promptFileName));
     }
 
     private void SetLoading()
@@ -71,5 +85,15 @@ public partial class MainPage : ContentPage
     private void SetError()
     {
         picture0.Source = picture1.Source = picture2.Source = picture3.Source = "error.png";
+    }
+
+    private string BuildImageFileName(Image image)
+    {
+        return $"{_prediction!.Id}_{Path.GetFileName(image.Source.ToString())}";
+    }
+
+    private string BuildPromptFileName()
+    {
+        return $"{_prediction!.Id}_Prompt.txt";
     }
 }

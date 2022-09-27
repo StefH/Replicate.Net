@@ -52,6 +52,7 @@
     <ItemGroup>
         <ProjectReference Include="..\..\src\Replicate.Net\Replicate.Net.csproj" />
         <ProjectReference Include="..\Replicate.Net.Common\Replicate.Net.Common.csproj" />
+        <ProjectReference Include="..\Replicate.Net.MauiLib\Replicate.Net.MauiLib.csproj" />
     </ItemGroup>
 
 </Project>
