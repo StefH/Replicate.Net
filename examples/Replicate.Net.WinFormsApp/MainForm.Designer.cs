@@ -177,6 +177,7 @@
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Stable Diffusion";
             ((System.ComponentModel.ISupportInitialize)(this.picture0)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picture1)).EndInit();
