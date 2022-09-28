@@ -112,6 +112,7 @@ public partial class MainForm : Form
             Prompt = txtPrompt.Text,
             Width = int.Parse(cmbWidth.Text),
             Height = int.Parse(cmbHeight.Text),
+            Seed = int.TryParse(txtSeed.Text, out var seed) ? seed : null
         };
 
         switch (cmbProvider.Text)
@@ -228,6 +229,7 @@ public partial class MainForm : Form
         cmbProvider.Enabled = show;
         cmbHeight.Enabled = show;
         cmbWidth.Enabled = show;
+        txtSeed.Enabled = show;
     }
 
     private void SavePrompt(string fileName)

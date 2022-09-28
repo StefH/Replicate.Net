@@ -46,6 +46,8 @@
             this.cmbProvider = new System.Windows.Forms.ComboBox();
             this.cmbHeight = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lblSeed = new System.Windows.Forms.Label();
+            this.txtSeed = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.picture0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picture1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picture2)).BeginInit();
@@ -134,7 +136,7 @@
             // 
             // buttonSaveAll
             // 
-            this.buttonSaveAll.Location = new System.Drawing.Point(82, 176);
+            this.buttonSaveAll.Location = new System.Drawing.Point(82, 224);
             this.buttonSaveAll.Margin = new System.Windows.Forms.Padding(2);
             this.buttonSaveAll.Name = "buttonSaveAll";
             this.buttonSaveAll.Size = new System.Drawing.Size(78, 30);
@@ -145,7 +147,7 @@
             // 
             // btnGenerate
             // 
-            this.btnGenerate.Location = new System.Drawing.Point(82, 125);
+            this.btnGenerate.Location = new System.Drawing.Point(82, 155);
             this.btnGenerate.Margin = new System.Windows.Forms.Padding(2);
             this.btnGenerate.Name = "btnGenerate";
             this.btnGenerate.Size = new System.Drawing.Size(78, 30);
@@ -219,6 +221,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.lblSeed);
+            this.panel1.Controls.Add(this.txtSeed);
             this.panel1.Controls.Add(this.cmbHeight);
             this.panel1.Controls.Add(this.buttonSaveAll);
             this.panel1.Controls.Add(this.cmbProvider);
@@ -232,11 +236,27 @@
             this.panel1.Size = new System.Drawing.Size(179, 898);
             this.panel1.TabIndex = 8;
             // 
+            // lblSeed
+            // 
+            this.lblSeed.AutoSize = true;
+            this.lblSeed.Location = new System.Drawing.Point(3, 118);
+            this.lblSeed.Name = "lblSeed";
+            this.lblSeed.Size = new System.Drawing.Size(32, 15);
+            this.lblSeed.TabIndex = 12;
+            this.lblSeed.Text = "Seed";
+            // 
+            // txtSeed
+            // 
+            this.txtSeed.Location = new System.Drawing.Point(65, 115);
+            this.txtSeed.Name = "txtSeed";
+            this.txtSeed.Size = new System.Drawing.Size(95, 23);
+            this.txtSeed.TabIndex = 11;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1034, 941);
+            this.ClientSize = new System.Drawing.Size(1034, 921);
             this.Controls.Add(this.picture3);
             this.Controls.Add(this.picture2);
             this.Controls.Add(this.picture1);
@@ -278,5 +298,7 @@
         private ComboBox cmbProvider;
         private ComboBox cmbHeight;
         private Panel panel1;
+        private Label lblSeed;
+        private TextBox txtSeed;
     }
 }
