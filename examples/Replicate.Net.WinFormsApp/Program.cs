@@ -1,4 +1,6 @@
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Replicate.Net.Common.Example.Factory;
 
 namespace Replicate.Net.WinFormsApp;
 
@@ -23,8 +25,19 @@ internal static class Program
     {
         var services = new ServiceCollection();
         services.AddHttpClient();
-
         services.AddSingleton<MainForm>();
+
+        services.AddSingleton<IConfiguration>(sp =>
+        {
+            var configurationBuilder = new ConfigurationBuilder();
+            configurationBuilder.AddEnvironmentVariables();
+
+            return configurationBuilder.Build();
+        });
+
+        services.AddSingleton<IExampleApiFactory, ExampleApiFactory>();
+        services.AddReplicateClient(Environment.GetEnvironmentVariable("replicate_token")!);
+
         return services.BuildServiceProvider();
     }
 }

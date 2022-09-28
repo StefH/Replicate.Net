@@ -9,10 +9,13 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.9" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="6.0.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Replicate.Net.DependencyInjection\Replicate.Net.DependencyInjection.csproj" />
     <ProjectReference Include="..\..\src\Replicate.Net\Replicate.Net.csproj" />
+    <ProjectReference Include="..\Replicate.Net.Common\Replicate.Net.Common.csproj" />
   </ItemGroup>
 
 </Project>

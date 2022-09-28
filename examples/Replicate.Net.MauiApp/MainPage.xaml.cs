@@ -19,21 +19,23 @@ public partial class MainPage : ContentPage
     };
 
     private readonly IFolderPicker _folderPicker;
+    private readonly IExampleApiFactory _exampleApiFactory;
 
     private Prediction? _prediction;
 
-    public MainPage(IFolderPicker folderPicker)
+    public MainPage(IFolderPicker folderPicker, IExampleApiFactory exampleApiFactory)
     {
         InitializeComponent();
 
         _folderPicker = folderPicker;
+        _exampleApiFactory = exampleApiFactory;
     }
 
     private async void OnGenerateClicked(object sender, EventArgs e)
     {
         SetLoading();
 
-        var api = new ExampleApiFactory().GetApi();
+        var api = _exampleApiFactory.GetApi();
 
         var input = new PredictionInput
         {

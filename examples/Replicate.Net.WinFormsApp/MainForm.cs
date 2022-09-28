@@ -3,9 +3,7 @@ using Newtonsoft.Json.Serialization;
 using Replicate.Net.Client;
 using Replicate.Net.Common.Example.Client;
 using Replicate.Net.Common.Example.Factory;
-using Replicate.Net.Factory;
 using Replicate.Net.Models;
-using System.Net.Http;
 
 namespace Replicate.Net.WinFormsApp;
 
@@ -21,17 +19,24 @@ public partial class MainForm : Form
     };
 
     private readonly IHttpClientFactory _httpClientFactory;
+    private readonly IExampleApiFactory _exampleApiFactory;
+    private readonly IReplicateApi _replicateApi;
 
     private Prediction? _prediction;
 
     private PictureBox[] PictureBoxes => Controls.OfType<PictureBox>().ToArray();
 
-    public MainForm(IHttpClientFactory httpClientFactory)
+    public MainForm(
+        IHttpClientFactory httpClientFactory, 
+        IExampleApiFactory exampleApiFactory, 
+        IReplicateApi replicateApi
+    )
     {
         InitializeComponent();
 
         _httpClientFactory = httpClientFactory;
-
+        _exampleApiFactory = exampleApiFactory;
+        _replicateApi = replicateApi;
         buttonSaveAll.Enabled = false;
     }
 
@@ -119,14 +124,14 @@ public partial class MainForm : Form
         {
             case "custom":
                 {
-                    var api = new ExampleApiFactory().GetApi();
+                    var api = _exampleApiFactory.GetApi();
 
                     return await api.CreatePredictionAndWaitOnResultAsync(input);
                 }
 
             case "replicate.com":
                 {
-                    var api = new ReplicateApiFactory().GetApi(Environment.GetEnvironmentVariable("replicate_token")!);
+                    //var api = new ReplicateApiFactory().GetApi(Environment.GetEnvironmentVariable("replicate_token")!);
 
                     var request = new Request
                     {
@@ -134,7 +139,7 @@ public partial class MainForm : Form
                         Input = input
                     };
 
-                    return await api.CreatePredictionAndWaitOnResultAsync(request);
+                    return await _replicateApi.CreatePredictionAndWaitOnResultAsync(request);
                 }
 
             default:
