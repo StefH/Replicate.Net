@@ -30,7 +30,6 @@
 		{
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.btnGenerate = new System.Windows.Forms.Button();
             this.picture0 = new System.Windows.Forms.PictureBox();
             this.txtPrompt = new System.Windows.Forms.TextBox();
             this.picture1 = new System.Windows.Forms.PictureBox();
@@ -39,24 +38,21 @@
             this.rightClickMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemSave = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonSaveAll = new System.Windows.Forms.Button();
-            this.cmdProvider = new System.Windows.Forms.ComboBox();
+            this.btnGenerate = new System.Windows.Forms.Button();
+            this.lblProvider = new System.Windows.Forms.Label();
+            this.lblWidth = new System.Windows.Forms.Label();
+            this.lblHeight = new System.Windows.Forms.Label();
+            this.cmbWidth = new System.Windows.Forms.ComboBox();
+            this.cmbProvider = new System.Windows.Forms.ComboBox();
+            this.cmbHeight = new System.Windows.Forms.ComboBox();
+            this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.picture0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picture1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picture2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picture3)).BeginInit();
             this.rightClickMenuStrip.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // btnGenerate
-            // 
-            this.btnGenerate.Location = new System.Drawing.Point(842, 49);
-            this.btnGenerate.Margin = new System.Windows.Forms.Padding(2);
-            this.btnGenerate.Name = "btnGenerate";
-            this.btnGenerate.Size = new System.Drawing.Size(78, 30);
-            this.btnGenerate.TabIndex = 0;
-            this.btnGenerate.Text = "Generate";
-            this.btnGenerate.UseVisualStyleBackColor = true;
-            this.btnGenerate.Click += new System.EventHandler(this.btnGenerate_Click);
             // 
             // picture0
             // 
@@ -66,7 +62,7 @@
             this.picture0.Margin = new System.Windows.Forms.Padding(2);
             this.picture0.Name = "picture0";
             this.picture0.Size = new System.Drawing.Size(400, 400);
-            this.picture0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.picture0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picture0.TabIndex = 1;
             this.picture0.TabStop = false;
             this.picture0.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picture_MouseDown);
@@ -90,7 +86,7 @@
             this.picture1.Margin = new System.Windows.Forms.Padding(2);
             this.picture1.Name = "picture1";
             this.picture1.Size = new System.Drawing.Size(400, 400);
-            this.picture1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.picture1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picture1.TabIndex = 3;
             this.picture1.TabStop = false;
             this.picture1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picture_MouseDown);
@@ -103,7 +99,7 @@
             this.picture2.Margin = new System.Windows.Forms.Padding(2);
             this.picture2.Name = "picture2";
             this.picture2.Size = new System.Drawing.Size(400, 400);
-            this.picture2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.picture2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picture2.TabIndex = 4;
             this.picture2.TabStop = false;
             this.picture2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picture_MouseDown);
@@ -116,7 +112,7 @@
             this.picture3.Margin = new System.Windows.Forms.Padding(2);
             this.picture3.Name = "picture3";
             this.picture3.Size = new System.Drawing.Size(400, 400);
-            this.picture3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.picture3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picture3.TabIndex = 5;
             this.picture3.TabStop = false;
             this.picture3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picture_MouseDown);
@@ -138,7 +134,7 @@
             // 
             // buttonSaveAll
             // 
-            this.buttonSaveAll.Location = new System.Drawing.Point(842, 880);
+            this.buttonSaveAll.Location = new System.Drawing.Point(82, 176);
             this.buttonSaveAll.Margin = new System.Windows.Forms.Padding(2);
             this.buttonSaveAll.Name = "buttonSaveAll";
             this.buttonSaveAll.Size = new System.Drawing.Size(78, 30);
@@ -147,32 +143,106 @@
             this.buttonSaveAll.UseVisualStyleBackColor = true;
             this.buttonSaveAll.Click += new System.EventHandler(this.buttonSaveAll_Click);
             // 
-            // cmdProvider
+            // btnGenerate
             // 
-            this.cmdProvider.FormattingEnabled = true;
-            this.cmdProvider.Items.AddRange(new object[] {
+            this.btnGenerate.Location = new System.Drawing.Point(82, 125);
+            this.btnGenerate.Margin = new System.Windows.Forms.Padding(2);
+            this.btnGenerate.Name = "btnGenerate";
+            this.btnGenerate.Size = new System.Drawing.Size(78, 30);
+            this.btnGenerate.TabIndex = 0;
+            this.btnGenerate.Text = "Generate";
+            this.btnGenerate.UseVisualStyleBackColor = true;
+            this.btnGenerate.Click += new System.EventHandler(this.btnGenerate_Click);
+            // 
+            // lblProvider
+            // 
+            this.lblProvider.AutoSize = true;
+            this.lblProvider.Location = new System.Drawing.Point(3, 17);
+            this.lblProvider.Name = "lblProvider";
+            this.lblProvider.Size = new System.Drawing.Size(51, 15);
+            this.lblProvider.TabIndex = 0;
+            this.lblProvider.Text = "Provider";
+            // 
+            // lblWidth
+            // 
+            this.lblWidth.AutoSize = true;
+            this.lblWidth.Location = new System.Drawing.Point(3, 49);
+            this.lblWidth.Name = "lblWidth";
+            this.lblWidth.Size = new System.Drawing.Size(39, 15);
+            this.lblWidth.TabIndex = 1;
+            this.lblWidth.Text = "Width";
+            // 
+            // lblHeight
+            // 
+            this.lblHeight.AutoSize = true;
+            this.lblHeight.Location = new System.Drawing.Point(3, 84);
+            this.lblHeight.Name = "lblHeight";
+            this.lblHeight.Size = new System.Drawing.Size(43, 15);
+            this.lblHeight.TabIndex = 2;
+            this.lblHeight.Text = "Height";
+            // 
+            // cmbWidth
+            // 
+            this.cmbWidth.FormattingEnabled = true;
+            this.cmbWidth.Items.AddRange(new object[] {
+            "512",
+            "768"});
+            this.cmbWidth.Location = new System.Drawing.Point(65, 41);
+            this.cmbWidth.Name = "cmbWidth";
+            this.cmbWidth.Size = new System.Drawing.Size(95, 23);
+            this.cmbWidth.TabIndex = 9;
+            this.cmbWidth.Text = "512";
+            // 
+            // cmbProvider
+            // 
+            this.cmbProvider.FormattingEnabled = true;
+            this.cmbProvider.Items.AddRange(new object[] {
             "custom",
             "replicate.com"});
-            this.cmdProvider.Location = new System.Drawing.Point(842, 12);
-            this.cmdProvider.Name = "cmdProvider";
-            this.cmdProvider.Size = new System.Drawing.Size(95, 23);
-            this.cmdProvider.TabIndex = 7;
-            this.cmdProvider.Text = "custom";
-            this.cmdProvider.SelectedIndexChanged += new System.EventHandler(this.cmdProvider_SelectedIndexChanged);
+            this.cmbProvider.Location = new System.Drawing.Point(65, 9);
+            this.cmbProvider.Name = "cmbProvider";
+            this.cmbProvider.Size = new System.Drawing.Size(95, 23);
+            this.cmbProvider.TabIndex = 7;
+            this.cmbProvider.Text = "custom";
+            // 
+            // cmbHeight
+            // 
+            this.cmbHeight.FormattingEnabled = true;
+            this.cmbHeight.Items.AddRange(new object[] {
+            "512",
+            "768"});
+            this.cmbHeight.Location = new System.Drawing.Point(65, 76);
+            this.cmbHeight.Name = "cmbHeight";
+            this.cmbHeight.Size = new System.Drawing.Size(95, 23);
+            this.cmbHeight.TabIndex = 10;
+            this.cmbHeight.Text = "512";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.cmbHeight);
+            this.panel1.Controls.Add(this.buttonSaveAll);
+            this.panel1.Controls.Add(this.cmbProvider);
+            this.panel1.Controls.Add(this.cmbWidth);
+            this.panel1.Controls.Add(this.lblHeight);
+            this.panel1.Controls.Add(this.lblWidth);
+            this.panel1.Controls.Add(this.lblProvider);
+            this.panel1.Controls.Add(this.btnGenerate);
+            this.panel1.Location = new System.Drawing.Point(842, 12);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(179, 898);
+            this.panel1.TabIndex = 8;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(954, 941);
-            this.Controls.Add(this.cmdProvider);
-            this.Controls.Add(this.buttonSaveAll);
+            this.ClientSize = new System.Drawing.Size(1034, 941);
             this.Controls.Add(this.picture3);
             this.Controls.Add(this.picture2);
             this.Controls.Add(this.picture1);
             this.Controls.Add(this.txtPrompt);
             this.Controls.Add(this.picture0);
-            this.Controls.Add(this.btnGenerate);
+            this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
@@ -184,14 +254,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.picture2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picture3)).EndInit();
             this.rightClickMenuStrip.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
 		}
 
 		#endregion
-
-		private Button btnGenerate;
 		private PictureBox picture0;
 		private TextBox txtPrompt;
 		private PictureBox picture1;
@@ -200,6 +270,13 @@
 		private ContextMenuStrip rightClickMenuStrip;
 		private ToolStripMenuItem toolStripMenuItemSave;
 		private Button buttonSaveAll;
-        private ComboBox cmdProvider;
+        private Button btnGenerate;
+        private Label lblProvider;
+        private Label lblWidth;
+        private Label lblHeight;
+        private ComboBox cmbWidth;
+        private ComboBox cmbProvider;
+        private ComboBox cmbHeight;
+        private Panel panel1;
     }
 }

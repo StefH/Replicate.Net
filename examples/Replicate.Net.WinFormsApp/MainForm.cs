@@ -5,6 +5,7 @@ using Replicate.Net.Common.Example.Client;
 using Replicate.Net.Common.Example.Factory;
 using Replicate.Net.Factory;
 using Replicate.Net.Models;
+using System.Net.Http;
 
 namespace Replicate.Net.WinFormsApp;
 
@@ -19,13 +20,19 @@ public partial class MainForm : Form
         Formatting = Formatting.Indented
     };
 
+    private readonly IHttpClientFactory _httpClientFactory;
+
     private Prediction? _prediction;
 
     private PictureBox[] PictureBoxes => Controls.OfType<PictureBox>().ToArray();
 
-    public MainForm()
+    public MainForm(IHttpClientFactory httpClientFactory)
     {
         InitializeComponent();
+
+        _httpClientFactory = httpClientFactory;
+
+        buttonSaveAll.Enabled = false;
     }
 
     private async void btnGenerate_Click(object sender, EventArgs e)
@@ -35,14 +42,20 @@ public partial class MainForm : Form
             async () =>
             {
                 SetImage(Resources.Loading);
+
                 _prediction = await CreatePredictionAndWaitOnResultAsync();
 
                 if (_prediction?.GeneratedPictures is not null)
                 {
-                    picture0.ImageLocation = _prediction.GeneratedPictures[0];
-                    picture1.ImageLocation = _prediction.GeneratedPictures[1];
-                    picture2.ImageLocation = _prediction.GeneratedPictures[2];
-                    picture3.ImageLocation = _prediction.GeneratedPictures[3];
+                    var tasks = new[]
+                    {
+                        SetImageAsync(picture0, _prediction.GeneratedPictures[0]),
+                        SetImageAsync(picture1, _prediction.GeneratedPictures[1]),
+                        SetImageAsync(picture2, _prediction.GeneratedPictures[2]),
+                        SetImageAsync(picture3, _prediction.GeneratedPictures[3]),
+                    };
+
+                    await Task.WhenAll(tasks);
                 }
                 else
                 {
@@ -65,11 +78,6 @@ public partial class MainForm : Form
     private void picture_MouseDown(object sender, MouseEventArgs e)
     {
         var pictureBox = (PictureBox)sender;
-
-        if (string.IsNullOrEmpty(pictureBox.ImageLocation))
-        {
-            return;
-        }
 
         switch (e.Button)
         {
@@ -97,25 +105,20 @@ public partial class MainForm : Form
         }
     }
 
-    private void cmdProvider_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        var cmd = (ComboBox)sender;
-
-        
-    }
-
     private async Task<Prediction> CreatePredictionAndWaitOnResultAsync()
     {
-        switch (cmdProvider.Text)
+        var input = new PredictionInput
+        {
+            Prompt = txtPrompt.Text,
+            Width = int.Parse(cmbWidth.Text),
+            Height = int.Parse(cmbHeight.Text),
+        };
+
+        switch (cmbProvider.Text)
         {
             case "custom":
                 {
                     var api = new ExampleApiFactory().GetApi();
-
-                    var input = new PredictionInput
-                    {
-                        Prompt = txtPrompt.Text
-                    };
 
                     return await api.CreatePredictionAndWaitOnResultAsync(input);
                 }
@@ -127,10 +130,7 @@ public partial class MainForm : Form
                     var request = new Request
                     {
                         Version = "a9758cbfbd5f3c2094457d996681af52552901775aa2d6dd0b17fd15df959bef",
-                        Input = new PredictionInput
-                        {
-                            Prompt = txtPrompt.Text
-                        }
+                        Input = input
                     };
 
                     return await api.CreatePredictionAndWaitOnResultAsync(request);
@@ -139,7 +139,7 @@ public partial class MainForm : Form
             default:
                 throw new InvalidCastException();
         }
-        
+
     }
 
     private string BuildImageFileName(PictureBox pictureBox)
@@ -200,9 +200,24 @@ public partial class MainForm : Form
     {
         foreach (var pictureBox in PictureBoxes)
         {
+            pictureBox.Image = null;
+            pictureBox.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox.Image = image;
-            pictureBox.ImageLocation = string.Empty;
         }
+    }
+
+    private Task SetImageAsync(PictureBox pictureBox, string url)
+    {
+        return Task.Run(async () =>
+        {
+            var httpClient = _httpClientFactory.CreateClient();
+            var stream = await httpClient.GetStreamAsync(url);
+
+            //pictureBox.Image = null;
+
+            pictureBox.Image = Image.FromStream(stream);
+            pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+        });
     }
 
     private void ToggleButtons(bool show)
@@ -210,6 +225,9 @@ public partial class MainForm : Form
         btnGenerate.Enabled = show;
         buttonSaveAll.Enabled = show;
         txtPrompt.Enabled = show;
+        cmbProvider.Enabled = show;
+        cmbHeight.Enabled = show;
+        cmbWidth.Enabled = show;
     }
 
     private void SavePrompt(string fileName)
@@ -247,6 +265,4 @@ public partial class MainForm : Form
             Refresh();
         }
     }
-
-
 }
