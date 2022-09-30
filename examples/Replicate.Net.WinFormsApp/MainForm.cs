@@ -150,7 +150,7 @@ public partial class MainForm : Form
 
     private string BuildImageFileName(PictureBox pictureBox)
     {
-        return $"{_prediction!.Id}_{Path.GetFileName(pictureBox.ImageLocation)}";
+        return $"{_prediction!.Id}_{pictureBox.Name}.png";
     }
 
     private string BuildPromptFileName()
@@ -218,8 +218,6 @@ public partial class MainForm : Form
         {
             var httpClient = _httpClientFactory.CreateClient();
             var stream = await httpClient.GetStreamAsync(url);
-
-            //pictureBox.Image = null;
 
             pictureBox.Image = Image.FromStream(stream);
             pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
