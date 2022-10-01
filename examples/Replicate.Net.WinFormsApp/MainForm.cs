@@ -1,211 +1,265 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Replicate.Net.Client;
+using Replicate.Net.Common.Example.Client;
+using Replicate.Net.Common.Example.Factory;
 using Replicate.Net.Models;
-using Replicate.Net.WinFormsApp.Example.Client;
-using Replicate.Net.WinFormsApp.Example.Factory;
 
 namespace Replicate.Net.WinFormsApp;
 
 public partial class MainForm : Form
 {
-	private readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings
-	{
-		ContractResolver = new DefaultContractResolver
-		{
-			NamingStrategy = new SnakeCaseNamingStrategy()
-		},
-		Formatting = Formatting.Indented
-	};
+    private readonly JsonSerializerSettings _jsonSerializerSettings = new()
+    {
+        ContractResolver = new DefaultContractResolver
+        {
+            NamingStrategy = new SnakeCaseNamingStrategy()
+        },
+        Formatting = Formatting.Indented
+    };
 
-	private Prediction? _prediction;
+    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly IExampleApiFactory _exampleApiFactory;
+    private readonly IReplicateApi _replicateApi;
 
-	private PictureBox[] _pictureBoxes => Controls.OfType<PictureBox>().ToArray();
+    private Prediction? _prediction;
 
-	public MainForm()
-	{
-		InitializeComponent();
-	}
+    private PictureBox[] PictureBoxes => Controls.OfType<PictureBox>().ToArray();
 
-	private async void btnGenerate_Click(object sender, EventArgs e)
-	{
-		await ExecuteAsync
-			(async () =>
-			{
-				SetImage(Resources.Loading);
+    public MainForm(
+        IHttpClientFactory httpClientFactory,
+        IExampleApiFactory exampleApiFactory,
+        IReplicateApi replicateApi
+    )
+    {
+        InitializeComponent();
 
-				var api = new ExampleApiFactory().GetApi();
+        _httpClientFactory = httpClientFactory;
+        _exampleApiFactory = exampleApiFactory;
+        _replicateApi = replicateApi;
+        buttonSaveAll.Enabled = false;
+    }
 
-				var input = new PredictionInput
-				{
-					Prompt = txtPrompt.Text
-				};
+    private async void btnGenerate_Click(object sender, EventArgs e)
+    {
+        await ExecuteAsync
+        (
+            async () =>
+            {
+                SetImage(Resources.Loading);
 
-				_prediction = await api.CreatePredictionAndWaitOnResultAsync(input);
+                _prediction = await CreatePredictionAndWaitOnResultAsync();
 
-				if (_prediction is not null && _prediction.GeneratedPictures is not null)
-				{
-					picture1.ImageLocation = _prediction.GeneratedPictures[0];
-					picture2.ImageLocation = _prediction.GeneratedPictures[1];
-					picture3.ImageLocation = _prediction.GeneratedPictures[2];
-					picture4.ImageLocation = _prediction.GeneratedPictures[3];
-				}
-				else
-				{
-					SetImage(Resources.Error);
-				}
-			},
-			() => SetImage(Resources.Error)
-		);
-	}
+                if (_prediction?.GeneratedPictures is not null)
+                {
+                    var tasks = new[]
+                    {
+                        SetImageAsync(picture0, _prediction.GeneratedPictures[0]),
+                        SetImageAsync(picture1, _prediction.GeneratedPictures[1]),
+                        SetImageAsync(picture2, _prediction.GeneratedPictures[2]),
+                        SetImageAsync(picture3, _prediction.GeneratedPictures[3]),
+                    };
 
-	private void txtPrompt_TextChanged(object sender, EventArgs e)
-	{
-		var textBox = (TextBox)sender;
-		btnGenerate.Enabled = !string.IsNullOrEmpty(textBox.Text);
-	}
+                    await Task.WhenAll(tasks);
+                }
+                else
+                {
+                    SetImage(Resources.Error);
+                }
+            },
+            () => SetImage(Resources.Error)
+        );
+    }
 
-	/// <summary>
-	/// https://stackoverflow.com/a/20725791/255966
-	/// </summary>
-	private void picture_MouseDown(object sender, MouseEventArgs e)
-	{
-		var pictureBox = (PictureBox)sender;
+    private void txtPrompt_TextChanged(object sender, EventArgs e)
+    {
+        var textBox = (TextBox)sender;
+        btnGenerate.Enabled = !string.IsNullOrEmpty(textBox.Text);
+    }
 
-		if (string.IsNullOrEmpty(pictureBox.ImageLocation))
-		{
-			return;
-		}
+    /// <summary>
+    /// https://stackoverflow.com/a/20725791/255966
+    /// </summary>
+    private void picture_MouseDown(object sender, MouseEventArgs e)
+    {
+        var pictureBox = (PictureBox)sender;
 
-		switch (e.Button)
-		{
-			case MouseButtons.Right:
-				rightClickMenuStrip.Show(pictureBox, new Point(e.X, e.Y));
-				break;
-		}
-	}
+        switch (e.Button)
+        {
+            case MouseButtons.Right:
+                rightClickMenuStrip.Show(pictureBox, new Point(e.X, e.Y));
+                break;
+        }
+    }
 
-	private void rightClickMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-	{
-		var menu = (ContextMenuStrip)sender;
+    private void rightClickMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+    {
+        var menu = (ContextMenuStrip)sender;
 
-		var pictureBox = menu.SourceControl as PictureBox;
-		if (pictureBox is null)
-		{
-			return;
-		}
+        var pictureBox = menu.SourceControl as PictureBox;
+        if (pictureBox is null)
+        {
+            return;
+        }
 
-		switch (e.ClickedItem.Text)
-		{
-			case "Save":
-				ShowSaveFileDialog(pictureBox);
-				break;
-		}
-	}
+        switch (e.ClickedItem.Text)
+        {
+            case "Save":
+                ShowSaveFileDialog(pictureBox);
+                break;
+        }
+    }
 
-	private string BuildImageFileName(PictureBox pictureBox)
-	{
-		return $"{_prediction!.Id}_{Path.GetFileName(pictureBox.ImageLocation)}";
-	}
+    private async Task<Prediction> CreatePredictionAndWaitOnResultAsync()
+    {
+        var input = new PredictionInput
+        {
+            Prompt = txtPrompt.Text,
+            Width = int.Parse(cmbWidth.Text),
+            Height = int.Parse(cmbHeight.Text),
+            Seed = int.TryParse(txtSeed.Text, out var seed) ? seed : null
+        };
 
-	private string BuildPromptFileName()
-	{
-		return $"{_prediction!.Id}_Prompt.txt";
-	}
+        switch (cmbProvider.Text)
+        {
+            case "custom":
+                var api = _exampleApiFactory.GetApi();
+                return await api.CreatePredictionAndWaitOnResultAsync(input);
 
-	private void ShowSaveFileDialog(PictureBox pictureBox)
-	{
-		var imageFilename = BuildImageFileName(pictureBox);
-		var promptFileName = BuildPromptFileName();
-		var saveFileDialog = new SaveFileDialog
-		{
-			Filter = @"PNG|*.png",
-			FileName = imageFilename
-		};
+            case "replicate.com":
+                var request = new Request
+                {
+                    Version = "a9758cbfbd5f3c2094457d996681af52552901775aa2d6dd0b17fd15df959bef",
+                    Input = input
+                };
 
-		if (DialogResult.OK == saveFileDialog.ShowDialog())
-		{
-			Execute(() =>
-			{
-				pictureBox.Image.Save(saveFileDialog.FileName);
-				SavePrompt(Path.Combine(Path.GetDirectoryName(saveFileDialog.FileName)!, promptFileName));
-			});
-		}
-	}
+                return await _replicateApi.CreatePredictionAndWaitOnResultAsync(request);
 
-	private void ShowFolderBrowserDialog()
-	{
-		var folderBrowserDialog = new FolderBrowserDialog();
-		if (DialogResult.OK == folderBrowserDialog.ShowDialog())
-		{
-			Execute(() =>
-			{
-				foreach (var pictureBox in _pictureBoxes)
-				{
-					var imageFilename = BuildImageFileName(pictureBox);
-					pictureBox.Image.Save(Path.Combine(folderBrowserDialog.SelectedPath, imageFilename));
-				}
+            default:
+                throw new InvalidCastException();
+        }
+    }
 
-				var promptFileName = BuildPromptFileName();
-				SavePrompt(Path.Combine(folderBrowserDialog.SelectedPath, promptFileName));
-			});
-		}
-	}
+    private string BuildImageFileName(PictureBox pictureBox)
+    {
+        return $"{_prediction!.Id}_{pictureBox.Name}.png";
+    }
 
-	private void buttonSaveAll_Click(object sender, EventArgs e)
-	{
-		ShowFolderBrowserDialog();
-	}
+    private string BuildPromptFileName()
+    {
+        return $"{_prediction!.Id}_Prompt.txt";
+    }
 
-	private void SetImage(Bitmap image)
-	{
-		foreach (var pictureBox in _pictureBoxes)
-		{
-			pictureBox.Image = image;
-			pictureBox.ImageLocation = string.Empty;
-		}
-	}
+    private void ShowSaveFileDialog(PictureBox pictureBox)
+    {
+        var imageFilename = BuildImageFileName(pictureBox);
+        var promptFileName = BuildPromptFileName();
+        var saveFileDialog = new SaveFileDialog
+        {
+            Filter = @"PNG|*.png",
+            FileName = imageFilename
+        };
 
-	private void ToggleButtons(bool show)
-	{
-		btnGenerate.Enabled = show;
-		buttonSaveAll.Enabled = show;
-		txtPrompt.Enabled = show;
-	}
+        if (DialogResult.OK == saveFileDialog.ShowDialog())
+        {
+            Execute(() =>
+            {
+                pictureBox.Image.Save(saveFileDialog.FileName);
+                SavePrompt(Path.Combine(Path.GetDirectoryName(saveFileDialog.FileName)!, promptFileName));
+            });
+        }
+    }
 
-	private void SavePrompt(string fileName)
-	{
-		File.WriteAllText(fileName, JsonConvert.SerializeObject(_prediction, _jsonSerializerSettings));
-	}
+    private void ShowFolderBrowserDialog()
+    {
+        var folderBrowserDialog = new FolderBrowserDialog();
+        if (DialogResult.OK == folderBrowserDialog.ShowDialog())
+        {
+            Execute(() =>
+            {
+                foreach (var pictureBox in PictureBoxes)
+                {
+                    var imageFilename = BuildImageFileName(pictureBox);
+                    pictureBox.Image.Save(Path.Combine(folderBrowserDialog.SelectedPath, imageFilename));
+                }
 
-	private void Execute(Action action)
-	{
-		try
-		{
-			ToggleButtons(false);
-			action();
-		}
-		finally
-		{
-			ToggleButtons(true);
-		}
-	}
+                var promptFileName = BuildPromptFileName();
+                SavePrompt(Path.Combine(folderBrowserDialog.SelectedPath, promptFileName));
+            });
+        }
+    }
 
-	private async Task ExecuteAsync(Func<Task> action, Action error)
-	{
-		try
-		{
-			ToggleButtons(false);
-			await action();
-		}
-		catch
-		{
-			error();
-		}
-		finally
-		{
-			ToggleButtons(true);
-			Refresh();
-		}
-	}
+    private void buttonSaveAll_Click(object sender, EventArgs e)
+    {
+        ShowFolderBrowserDialog();
+    }
+
+    private void SetImage(Image image)
+    {
+        foreach (var pictureBox in PictureBoxes)
+        {
+            pictureBox.Image = null;
+            pictureBox.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureBox.Image = image;
+        }
+    }
+
+    private Task SetImageAsync(PictureBox pictureBox, string url)
+    {
+        return Task.Run(async () =>
+        {
+            var httpClient = _httpClientFactory.CreateClient();
+            var stream = await httpClient.GetStreamAsync(url);
+
+            pictureBox.Image = Image.FromStream(stream);
+            pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+        });
+    }
+
+    private void ToggleButtons(bool show)
+    {
+        btnGenerate.Enabled = show;
+        buttonSaveAll.Enabled = show;
+        txtPrompt.Enabled = show;
+        cmbProvider.Enabled = show;
+        cmbHeight.Enabled = show;
+        cmbWidth.Enabled = show;
+        txtSeed.Enabled = show;
+    }
+
+    private void SavePrompt(string fileName)
+    {
+        File.WriteAllText(fileName, JsonConvert.SerializeObject(_prediction, _jsonSerializerSettings));
+    }
+
+    private void Execute(Action action)
+    {
+        try
+        {
+            ToggleButtons(false);
+            action();
+        }
+        finally
+        {
+            ToggleButtons(true);
+        }
+    }
+
+    private async Task ExecuteAsync(Func<Task> action, Action error)
+    {
+        try
+        {
+            ToggleButtons(false);
+            await action();
+        }
+        catch
+        {
+            error();
+        }
+        finally
+        {
+            ToggleButtons(true);
+            Refresh();
+        }
+    }
 }

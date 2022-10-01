@@ -76,7 +76,7 @@ async Task RunOnReplicateUsingFactoryAsync()
 
 	return;
 
-	var requestStableDiffusion = new Request
+	var requestReplicate = new Request
 	{
 		Version = "a9758cbfbd5f3c2094457d996681af52552901775aa2d6dd0b17fd15df959bef",
 		Input = new PredictionInput
@@ -84,7 +84,7 @@ async Task RunOnReplicateUsingFactoryAsync()
 			Prompt = "a gentleman cat with blue eyes wearing a top-hat in a 19th century portrait"
 		}
 	};
-	var response1 = await replicateApi.CreatePredictionAndWaitOnResultAsync(requestStableDiffusion).ConfigureAwait(false);
+	var response1 = await replicateApi.CreatePredictionAndWaitOnResultAsync(requestReplicate).ConfigureAwait(false);
 	Console.WriteLine(JsonConvert.SerializeObject(response1, Formatting.Indented));
 
 	var requestcjwbw = new Request

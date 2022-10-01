@@ -1,11 +1,14 @@
 ﻿@page "/"
 
 @using Replicate.Net.BlazorApp.Models
+@using Replicate.Net.Common.Example.Factory
+@using Replicate.Net.Common.Example.Client
 @using Replicate.Net.Factory
 @using Replicate.Net.Models
 @using Replicate.Net.Client;
 
 @inject ILogger<Index> Logger
+@inject IExampleApiFactory ExampleFactory
 
 <PageTitle>Index</PageTitle>
 
@@ -24,9 +27,8 @@
 	<img src="@prediction.GeneratedPictures[0]" />
 }
 
-
 @code {
-	private InputModel inputModel = new();
+	private InputModel inputModel = new() { Prompt = "Apple tree, painting, van gogh" };
 	private Prediction? prediction;
 
 	private async Task HandleValidSubmit()
@@ -35,15 +37,13 @@
 
 		prediction = null;
 
-		//var factory = new ExampleApiFactory();
+		var api = ExampleFactory.GetApi();
 
-		//var api = factory.GetApi();
+		var input = new PredictionInput
+		{
+			Prompt = inputModel.Prompt!
+		};
 
-		//var input = new PredictionInput
-		//{
-		//	Prompt = inputModel.Prompt!
-		//};
-
-		//prediction = await api.CreatePredictionAndWaitOnResultAsync(input).ConfigureAwait(false);
+		prediction = await api.CreatePredictionAndWaitOnResultAsync(input).ConfigureAwait(false);
 	}
 }

@@ -14,7 +14,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Replicate.Net\Replicate.Net.csproj" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Replicate.Net.DependencyInjection\Replicate.Net.DependencyInjection.csproj" />
+    <ProjectReference Include="..\Replicate.Net.Common\Replicate.Net.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>
