@@ -60,10 +60,10 @@
             // 
             this.picture0.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picture0.ImageLocation = "";
-            this.picture0.Location = new System.Drawing.Point(11, 93);
+            this.picture0.Location = new System.Drawing.Point(11, 92);
             this.picture0.Margin = new System.Windows.Forms.Padding(2);
             this.picture0.Name = "picture0";
-            this.picture0.Size = new System.Drawing.Size(400, 400);
+            this.picture0.Size = new System.Drawing.Size(430, 430);
             this.picture0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picture0.TabIndex = 1;
             this.picture0.TabStop = false;
@@ -75,7 +75,7 @@
             this.txtPrompt.Margin = new System.Windows.Forms.Padding(2);
             this.txtPrompt.Multiline = true;
             this.txtPrompt.Name = "txtPrompt";
-            this.txtPrompt.Size = new System.Drawing.Size(815, 68);
+            this.txtPrompt.Size = new System.Drawing.Size(878, 68);
             this.txtPrompt.TabIndex = 2;
             this.txtPrompt.Text = "multicolor hyperspace";
             this.txtPrompt.TextChanged += new System.EventHandler(this.txtPrompt_TextChanged);
@@ -84,10 +84,10 @@
             // 
             this.picture1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picture1.ImageLocation = "";
-            this.picture1.Location = new System.Drawing.Point(426, 93);
+            this.picture1.Location = new System.Drawing.Point(459, 92);
             this.picture1.Margin = new System.Windows.Forms.Padding(2);
             this.picture1.Name = "picture1";
-            this.picture1.Size = new System.Drawing.Size(400, 400);
+            this.picture1.Size = new System.Drawing.Size(430, 430);
             this.picture1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picture1.TabIndex = 3;
             this.picture1.TabStop = false;
@@ -97,10 +97,10 @@
             // 
             this.picture2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picture2.ImageLocation = "";
-            this.picture2.Location = new System.Drawing.Point(11, 510);
+            this.picture2.Location = new System.Drawing.Point(11, 540);
             this.picture2.Margin = new System.Windows.Forms.Padding(2);
             this.picture2.Name = "picture2";
-            this.picture2.Size = new System.Drawing.Size(400, 400);
+            this.picture2.Size = new System.Drawing.Size(430, 430);
             this.picture2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picture2.TabIndex = 4;
             this.picture2.TabStop = false;
@@ -110,10 +110,10 @@
             // 
             this.picture3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picture3.ImageLocation = "";
-            this.picture3.Location = new System.Drawing.Point(426, 510);
+            this.picture3.Location = new System.Drawing.Point(459, 540);
             this.picture3.Margin = new System.Windows.Forms.Padding(2);
             this.picture3.Name = "picture3";
-            this.picture3.Size = new System.Drawing.Size(400, 400);
+            this.picture3.Size = new System.Drawing.Size(430, 430);
             this.picture3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picture3.TabIndex = 5;
             this.picture3.TabStop = false;
@@ -231,9 +231,9 @@
             this.panel1.Controls.Add(this.lblWidth);
             this.panel1.Controls.Add(this.lblProvider);
             this.panel1.Controls.Add(this.btnGenerate);
-            this.panel1.Location = new System.Drawing.Point(842, 12);
+            this.panel1.Location = new System.Drawing.Point(904, 11);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(170, 898);
+            this.panel1.Size = new System.Drawing.Size(170, 959);
             this.panel1.TabIndex = 8;
             // 
             // lblSeed
@@ -256,7 +256,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1019, 921);
+            this.ClientSize = new System.Drawing.Size(1074, 981);
             this.Controls.Add(this.picture3);
             this.Controls.Add(this.picture2);
             this.Controls.Add(this.picture1);
