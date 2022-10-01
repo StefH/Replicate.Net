@@ -27,8 +27,8 @@ public partial class MainForm : Form
     private PictureBox[] PictureBoxes => Controls.OfType<PictureBox>().ToArray();
 
     public MainForm(
-        IHttpClientFactory httpClientFactory, 
-        IExampleApiFactory exampleApiFactory, 
+        IHttpClientFactory httpClientFactory,
+        IExampleApiFactory exampleApiFactory,
         IReplicateApi replicateApi
     )
     {
@@ -123,29 +123,21 @@ public partial class MainForm : Form
         switch (cmbProvider.Text)
         {
             case "custom":
-                {
-                    var api = _exampleApiFactory.GetApi();
-
-                    return await api.CreatePredictionAndWaitOnResultAsync(input);
-                }
+                var api = _exampleApiFactory.GetApi();
+                return await api.CreatePredictionAndWaitOnResultAsync(input);
 
             case "replicate.com":
+                var request = new Request
                 {
-                    //var api = new ReplicateApiFactory().GetApi(Environment.GetEnvironmentVariable("replicate_token")!);
+                    Version = "a9758cbfbd5f3c2094457d996681af52552901775aa2d6dd0b17fd15df959bef",
+                    Input = input
+                };
 
-                    var request = new Request
-                    {
-                        Version = "a9758cbfbd5f3c2094457d996681af52552901775aa2d6dd0b17fd15df959bef",
-                        Input = input
-                    };
-
-                    return await _replicateApi.CreatePredictionAndWaitOnResultAsync(request);
-                }
+                return await _replicateApi.CreatePredictionAndWaitOnResultAsync(request);
 
             default:
                 throw new InvalidCastException();
         }
-
     }
 
     private string BuildImageFileName(PictureBox pictureBox)
