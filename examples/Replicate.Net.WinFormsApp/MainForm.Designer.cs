@@ -233,7 +233,7 @@
             this.panel1.Controls.Add(this.btnGenerate);
             this.panel1.Location = new System.Drawing.Point(842, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(179, 898);
+            this.panel1.Size = new System.Drawing.Size(170, 898);
             this.panel1.TabIndex = 8;
             // 
             // lblSeed
@@ -256,7 +256,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1034, 921);
+            this.ClientSize = new System.Drawing.Size(1019, 921);
             this.Controls.Add(this.picture3);
             this.Controls.Add(this.picture2);
             this.Controls.Add(this.picture1);
