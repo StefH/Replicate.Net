@@ -19,7 +19,7 @@ public class ExampleApiFactory : IExampleApiFactory
         NullValueHandling = NullValueHandling.Ignore
     };
 
-    public readonly Uri _predictionBaseUrl; // = new(Environment.GetEnvironmentVariable("ExamplePredictionBaseUrl")!);
+    private readonly Uri _predictionBaseUrl;
 
     public ExampleApiFactory(IConfiguration configuration)
     {

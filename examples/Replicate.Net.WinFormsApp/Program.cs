@@ -27,7 +27,7 @@ internal static class Program
         services.AddHttpClient();
         services.AddSingleton<MainForm>();
 
-        services.AddSingleton<IConfiguration>(sp =>
+        services.AddSingleton<IConfiguration>(_ =>
         {
             var configurationBuilder = new ConfigurationBuilder();
             configurationBuilder.AddEnvironmentVariables();
