@@ -1,11 +1,9 @@
 ﻿using CommunityToolkit.Maui.Storage;
-using Microsoft.UI.Xaml.Controls;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Replicate.Net.Common.Example.Client;
 using Replicate.Net.Common.Example.Factory;
 using Replicate.Net.Models;
-using Windows.Storage.Streams;
 using MauiImage = Microsoft.Maui.Controls.Image;
 
 namespace Replicate.Net.MauiApp;
@@ -25,11 +23,6 @@ public partial class MainPage : ContentPage
     private readonly IExampleApiFactory _exampleApiFactory;
 
     private Prediction? _prediction;
-
-    private StreamImageSource? _streamImageSource0;
-    private StreamImageSource? _streamImageSource1;
-    private StreamImageSource? _streamImageSource2;
-    private StreamImageSource? _streamImageSource3;
 
     private MauiImage[] Images => this.GetVisualTreeDescendants().OfType<MauiImage>().ToArray();
 
@@ -58,20 +51,13 @@ public partial class MainPage : ContentPage
 
             if (_prediction?.GeneratedPictures is not null)
             {
-                var tasks = new[]
-                {
-                    SetImageAsync(picture0, _prediction.GeneratedPictures[0]),
-                    SetImageAsync(picture1, _prediction.GeneratedPictures[1]),
-                    SetImageAsync(picture2, _prediction.GeneratedPictures[2]),
-                    SetImageAsync(picture3, _prediction.GeneratedPictures[3]),
-                };
+                LoadImageSourceFromUrl(picture0, _prediction.GeneratedPictures[0]);
+                LoadImageSourceFromUrl(picture1, _prediction.GeneratedPictures[1]);
+                LoadImageSourceFromUrl(picture2, _prediction.GeneratedPictures[2]);
+                LoadImageSourceFromUrl(picture3, _prediction.GeneratedPictures[3]);
 
-                await Task.WhenAll(tasks);
-
-                //picture0.Source = ImageSource.FromUri(new Uri(_prediction.GeneratedPictures[0]));
-                //picture1.Source = ImageSource.FromUri(new Uri(_prediction.GeneratedPictures[1]));
-                //picture2.Source = ImageSource.FromUri(new Uri(_prediction.GeneratedPictures[2]));
-                //picture3.Source = ImageSource.FromUri(new Uri(_prediction.GeneratedPictures[3]));
+                btnGenerate.IsEnabled = true;
+                btnSaveAll.IsEnabled = true;
             }
             else
             {
@@ -84,13 +70,13 @@ public partial class MainPage : ContentPage
         }
     }
 
-    private Task SetImageAsync(MauiImage pictureBox, string url)
+    private void LoadImageSourceFromUrl(MauiImage image, string url)
     {
-        return Task.Run(() =>
+        image.Source = ImageSource.FromStream(async ct =>
         {
             var httpClient = _httpClientFactory.CreateClient();
-
-            pictureBox.Source = ImageSource.FromStream(ct => httpClient.GetStreamAsync(url, ct));
+            var bytes = await httpClient.GetByteArrayAsync(url, ct);
+            return new MemoryStream(bytes);
         });
     }
 
@@ -99,10 +85,12 @@ public partial class MainPage : ContentPage
         var folderPickerResult = await FolderPicker.PickAsync(CancellationToken.None);
         if (folderPickerResult.IsSuccessful)
         {
+            btnSaveAll.IsEnabled = false;
             foreach (var image in Images)
             {
                 var imageFilename = BuildImageFileName(image);
                 var stream = await ((IStreamImageSource)image.Source).GetStreamAsync();
+                stream.Position = 0;
                 await using var fileStream = new FileStream(Path.Combine(folderPickerResult.Folder.Path, imageFilename), FileMode.Create);
 
                 await stream.CopyToAsync(fileStream);
@@ -110,22 +98,31 @@ public partial class MainPage : ContentPage
 
             var promptFileName = BuildPromptFileName();
             SavePrompt(Path.Combine(folderPickerResult.Folder.Path, promptFileName));
+
+            btnSaveAll.IsEnabled = true;
         }
     }
 
     private void SetLoading()
     {
         picture0.Source = picture1.Source = picture2.Source = picture3.Source = "loading.gif";
+
+        btnGenerate.IsEnabled = false;
+        btnSaveAll.IsEnabled = false;
     }
 
     private void SetError()
     {
         picture0.Source = picture1.Source = picture2.Source = picture3.Source = "error.png";
+
+        btnGenerate.IsEnabled = true;
+        btnSaveAll.IsEnabled = false;
     }
 
     private string BuildImageFileName(MauiImage image)
     {
-        return $"{_prediction!.Id}_{Path.GetFileName(image.Source.ToString())}";
+        //return $"{_prediction!.Id}_{Path.GetFileName(image.Source.ToString())}";
+        return $"{_prediction!.Id}_picture{image.Id}.png";
     }
 
     private string BuildPromptFileName()

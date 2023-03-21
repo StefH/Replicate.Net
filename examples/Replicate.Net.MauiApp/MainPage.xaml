@@ -22,7 +22,7 @@
                 <Editor Grid.Column="0"
                         Grid.ColumnSpan="2"
                         x:Name="txtPrompt" 
-                        Text="rough ocean storm atmospheric, hyper realistic, 8k, epic composition, cinematic, octane render, artstation landscape vista photography by Carr Clifton &amp; Galen Rowell, 16K resolution, Landscape veduta photo by Dustin Lefevre, 8k resolution, detailed landscape painting by Ivan Shishkin, DeviantArt, Flickr, rendered in Enscape, Miyazaki, Nausicaa Ghibli, Breath of The Wild, 4k detailed post processing, artstation, rendering by octane, unreal engine" />
+                        Text="temple in ruines, forest, stairs, columns, cinematic, detailed, atmospheric, epic, concept art, Matte painting, background, mist, photo-realistic, concept art, volumetric light, cinematic epic + rule of thirds octane render, 8k, corona render, movie concept art, octane render, cinematic, trending on artstation, movie concept art, cinematic composition , ultra-detailed, realistic , hyper-realistic , volumetric lighting, 8k –ar 2:3 –test –uplight" />
 
                 <Button Grid.Column="2"
                         x:Name="btnGenerate"
