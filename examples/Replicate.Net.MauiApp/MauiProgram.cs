@@ -1,8 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using CommunityToolkit.Maui;
+using Microsoft.Extensions.Configuration;
 using Replicate.Net.Common.Example.Factory;
-using Replicate.Net.MauiLib;
-using Replicate.Net.MauiLib.Platforms.Windows;
 
 namespace Replicate.Net.MauiApp;
 
@@ -14,6 +12,11 @@ public static class MauiProgram
 
         builder
             .UseMauiApp<App>()
+
+            // Initialize the .NET MAUI Community Toolkit by adding the below line of code
+            .UseMauiCommunityToolkit()
+
+            // After initializing the .NET MAUI Community Toolkit, optionally add additional fonts
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -22,8 +25,9 @@ public static class MauiProgram
 
         builder.Configuration.AddEnvironmentVariables();
 
+        builder.Services.AddHttpClient();
+
         // services
-        builder.Services.AddSingleton<IFolderPicker, FolderPicker>();
         builder.Services.AddSingleton<IExampleApiFactory, ExampleApiFactory>();
 
         // pages

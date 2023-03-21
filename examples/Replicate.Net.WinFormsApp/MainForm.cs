@@ -96,8 +96,7 @@ public partial class MainForm : Form
     {
         var menu = (ContextMenuStrip)sender;
 
-        var pictureBox = menu.SourceControl as PictureBox;
-        if (pictureBox is null)
+        if (menu.SourceControl is not PictureBox pictureBox)
         {
             return;
         }
