@@ -1,9 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using CommunityToolkit.Maui.Storage;
+using Microsoft.UI.Xaml.Controls;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Replicate.Net.Common.Example.Client;
 using Replicate.Net.Common.Example.Factory;
-using Replicate.Net.MauiLib;
 using Replicate.Net.Models;
+using Windows.Storage.Streams;
+using MauiImage = Microsoft.Maui.Controls.Image;
 
 namespace Replicate.Net.MauiApp;
 
@@ -18,17 +21,24 @@ public partial class MainPage : ContentPage
         Formatting = Formatting.Indented
     };
 
-    private readonly IFolderPicker _folderPicker;
+    private readonly IHttpClientFactory _httpClientFactory;
     private readonly IExampleApiFactory _exampleApiFactory;
 
     private Prediction? _prediction;
 
-    public MainPage(IFolderPicker folderPicker, IExampleApiFactory exampleApiFactory)
+    private StreamImageSource? _streamImageSource0;
+    private StreamImageSource? _streamImageSource1;
+    private StreamImageSource? _streamImageSource2;
+    private StreamImageSource? _streamImageSource3;
+
+    private MauiImage[] Images => this.GetVisualTreeDescendants().OfType<MauiImage>().ToArray();
+
+    public MainPage(IExampleApiFactory exampleApiFactory, IHttpClientFactory httpClientFactory)
     {
         InitializeComponent();
 
-        _folderPicker = folderPicker;
         _exampleApiFactory = exampleApiFactory;
+        _httpClientFactory = httpClientFactory;
     }
 
     private async void OnGenerateClicked(object sender, EventArgs e)
@@ -48,10 +58,20 @@ public partial class MainPage : ContentPage
 
             if (_prediction?.GeneratedPictures is not null)
             {
-                picture0.Source = ImageSource.FromUri(new Uri(_prediction.GeneratedPictures[0]));
-                picture1.Source = ImageSource.FromUri(new Uri(_prediction.GeneratedPictures[1]));
-                picture2.Source = ImageSource.FromUri(new Uri(_prediction.GeneratedPictures[2]));
-                picture3.Source = ImageSource.FromUri(new Uri(_prediction.GeneratedPictures[3]));
+                var tasks = new[]
+                {
+                    SetImageAsync(picture0, _prediction.GeneratedPictures[0]),
+                    SetImageAsync(picture1, _prediction.GeneratedPictures[1]),
+                    SetImageAsync(picture2, _prediction.GeneratedPictures[2]),
+                    SetImageAsync(picture3, _prediction.GeneratedPictures[3]),
+                };
+
+                await Task.WhenAll(tasks);
+
+                //picture0.Source = ImageSource.FromUri(new Uri(_prediction.GeneratedPictures[0]));
+                //picture1.Source = ImageSource.FromUri(new Uri(_prediction.GeneratedPictures[1]));
+                //picture2.Source = ImageSource.FromUri(new Uri(_prediction.GeneratedPictures[2]));
+                //picture3.Source = ImageSource.FromUri(new Uri(_prediction.GeneratedPictures[3]));
             }
             else
             {
@@ -64,18 +84,33 @@ public partial class MainPage : ContentPage
         }
     }
 
+    private Task SetImageAsync(MauiImage pictureBox, string url)
+    {
+        return Task.Run(() =>
+        {
+            var httpClient = _httpClientFactory.CreateClient();
+
+            pictureBox.Source = ImageSource.FromStream(ct => httpClient.GetStreamAsync(url, ct));
+        });
+    }
+
     private async void OnSaveAllClicked(object sender, EventArgs e)
     {
-        var folder = await _folderPicker.PickFolderAsync();
-        int x = 0;
-        //foreach (var pictureBox in PictureBoxes)
-        //{
-        //    var imageFilename = BuildImageFileName(pictureBox);
-        //    pictureBox.Image.Save(Path.Combine(folderBrowserDialog.SelectedPath, imageFilename));
-        //}
+        var folderPickerResult = await FolderPicker.PickAsync(CancellationToken.None);
+        if (folderPickerResult.IsSuccessful)
+        {
+            foreach (var image in Images)
+            {
+                var imageFilename = BuildImageFileName(image);
+                var stream = await ((IStreamImageSource)image.Source).GetStreamAsync();
+                await using var fileStream = new FileStream(Path.Combine(folderPickerResult.Folder.Path, imageFilename), FileMode.Create);
 
-        //var promptFileName = BuildPromptFileName();
-        //SavePrompt(Path.Combine(folderBrowserDialog.SelectedPath, promptFileName));
+                await stream.CopyToAsync(fileStream);
+            }
+
+            var promptFileName = BuildPromptFileName();
+            SavePrompt(Path.Combine(folderPickerResult.Folder.Path, promptFileName));
+        }
     }
 
     private void SetLoading()
@@ -88,7 +123,7 @@ public partial class MainPage : ContentPage
         picture0.Source = picture1.Source = picture2.Source = picture3.Source = "error.png";
     }
 
-    private string BuildImageFileName(Image image)
+    private string BuildImageFileName(MauiImage image)
     {
         return $"{_prediction!.Id}_{Path.GetFileName(image.Source.ToString())}";
     }
@@ -96,5 +131,10 @@ public partial class MainPage : ContentPage
     private string BuildPromptFileName()
     {
         return $"{_prediction!.Id}_Prompt.txt";
+    }
+
+    private void SavePrompt(string fileName)
+    {
+        File.WriteAllText(fileName, JsonConvert.SerializeObject(_prediction, _jsonSerializerSettings));
     }
 }
