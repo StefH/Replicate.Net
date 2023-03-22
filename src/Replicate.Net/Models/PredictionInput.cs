@@ -1,6 +1,4 @@
-﻿//using Newtonsoft.Json;
-
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Replicate.Net.Models;
 
@@ -25,13 +23,17 @@ public class PredictionInput
     public int Height { get; set; } = 512;
 
     /// <summary>
-    /// Initial image to generate variations of. Will be resized to the specified width and height.
+    /// Initial image (URL) to generate variations of. Will be resized to the specified width and height.
+    /// 
+    /// This image should be uploaded to a publicly accessible HTTP URL and that URL string should be used for this property.
     /// </summary>
     public string? InitImage { get; set; }
 
     /// <summary>
     /// Black and white image to use as mask for inpainting over init_image.
     /// Black pixels are inpainted and white pixels are preserved. Experimental feature, tends to work better with prompt strength of 0.5-0.7
+    ///
+    /// This image should be uploaded to a publicly accessible HTTP URL and that URL string should be used for this property.
     /// </summary>
     public string? Mask { get; set; }
 

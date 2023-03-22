@@ -16,4 +16,9 @@
         <InternalsVisibleTo Include="Replicate.Net.Common" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Update="RestEase" Version="1.6.1" />
+      <PackageReference Update="Stef.Validation" Version="0.1.1" />
+    </ItemGroup>
+
 </Project>
