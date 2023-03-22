@@ -1,4 +1,6 @@
-# 0.0.3 (19 September 2022)
-- #2 Add Replicate.Net.DependencyInjection [enhancement]
+# 0.0.4 (22 March 2023)
+- #4 Update Winforms example app + add initial version from Maui app [example]
+- #9 Update Maui example [example]
+- #10  Add some more comments to the PredictionInput class and upgrade some NuGet packages. [enhancement]
 
 The full release notes can be found here: https://github.com/StefH/Replicate.Net/blob/main/ReleaseNotes.md
