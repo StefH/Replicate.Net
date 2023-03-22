@@ -72,10 +72,22 @@ async Task RunOnReplicateUsingFactoryAsync()
 	Console.WriteLine("modelVersions = {0}", modelVersions?.Count);
 
 	var collections = await replicateApi.GetCollectionsAsync("super-resolution").ConfigureAwait(false);
-	Console.WriteLine("collections = {0}", collections.Models?.Count);
+	Console.WriteLine("collections = {0}", collections.Models.Count);
 
-	return;
+    return;
 
+    var requestReplicateFile = new Request
+    {
+        Version = "a9758cbfbd5f3c2094457d996681af52552901775aa2d6dd0b17fd15df959bef",
+        Input = new PredictionInput
+        {
+            Prompt = "a gentleman cat with blue eyes wearing a top-hat in a 19th century portrait",
+			InitImage = "https://i.postimg.cc/6pp0xHYq/temple.jpg"
+        }
+    };
+    var responseFile = await replicateApi.CreatePredictionAndWaitOnResultAsync(requestReplicateFile).ConfigureAwait(false);
+    Console.WriteLine(JsonConvert.SerializeObject(responseFile, Formatting.Indented));
+	
 	var requestReplicate = new Request
 	{
 		Version = "a9758cbfbd5f3c2094457d996681af52552901775aa2d6dd0b17fd15df959bef",
