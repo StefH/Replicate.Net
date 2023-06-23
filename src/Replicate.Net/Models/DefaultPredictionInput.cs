@@ -6,7 +6,7 @@ namespace Replicate.Net.Models;
 /// <summary>
 /// The model's input.
 /// </summary>
-public class PredictionInput : IPredictionInput
+public class DefaultPredictionInput : IPredictionInput
 {
     /// <summary>
     /// Input prompt.

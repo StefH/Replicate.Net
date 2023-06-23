@@ -40,7 +40,7 @@ public partial class MainPage : ContentPage
 
         var api = _exampleApiFactory.GetApi();
 
-        var input = new PredictionInput
+        var input = new DefaultPredictionInput
         {
             Prompt = txtPrompt.Text
         };

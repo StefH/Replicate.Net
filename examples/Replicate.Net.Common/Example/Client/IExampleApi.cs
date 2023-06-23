@@ -11,7 +11,7 @@ public interface IExampleApi
     Task<Prediction> CancelPredictionAsync([Path] string predictionId, CancellationToken cancellationToken = default);
 
     [Post("predictions")]
-    Task<Prediction> CreatePredictionAsync([Body] PredictionInput input, CancellationToken cancellationToken = default);
+    Task<Prediction> CreatePredictionAsync([Body] DefaultPredictionInput input, CancellationToken cancellationToken = default);
 
     [Get("predictions/{predictionId}")]
     Task<Prediction> GetPredictionAsync([Path] string predictionId, CancellationToken cancellationToken = default);
