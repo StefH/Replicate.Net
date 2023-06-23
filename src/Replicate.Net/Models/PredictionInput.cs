@@ -1,11 +1,12 @@
 ﻿using Newtonsoft.Json;
+using Replicate.Net.Interop;
 
 namespace Replicate.Net.Models;
 
 /// <summary>
 /// The model's input.
 /// </summary>
-public class PredictionInput
+public class PredictionInput : IPredictionInput
 {
     /// <summary>
     /// Input prompt.

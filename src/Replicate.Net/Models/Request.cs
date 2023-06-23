@@ -1,4 +1,6 @@
-﻿namespace Replicate.Net.Models;
+﻿using Replicate.Net.Interop;
+
+namespace Replicate.Net.Models;
 
 public class Request
 {
@@ -10,5 +12,5 @@ public class Request
     /// <summary>
     /// The model's input.
     /// </summary>
-    public PredictionInput Input { get; set; } = null!;
+    public IPredictionInput Input { get; set; } = null!;
 }

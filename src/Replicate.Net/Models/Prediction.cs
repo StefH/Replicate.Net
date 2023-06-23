@@ -2,6 +2,7 @@
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Replicate.Net.Interop;
 
 namespace Replicate.Net.Models;
 
@@ -26,7 +27,7 @@ public class Prediction
     /// </summary>
     public string Status { get; set; } = null!;
 
-    public PredictionInput Input { get; set; } = null!;
+    public IPredictionInput Input { get; set; } = null!;
 
     public object? Output { get; set; }
 
