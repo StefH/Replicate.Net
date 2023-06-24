@@ -111,7 +111,7 @@ public partial class MainForm : Form
 
     private async Task<Prediction> CreatePredictionAndWaitOnResultAsync()
     {
-        var input = new PredictionInput
+        var input = new DefaultPredictionInput
         {
             Prompt = txtPrompt.Text,
             Width = int.Parse(cmbWidth.Text),

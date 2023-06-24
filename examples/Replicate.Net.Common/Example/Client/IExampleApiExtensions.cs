@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Replicate.Net.Client;
 using Replicate.Net.Constants;
+using Replicate.Net.Interfaces;
 using Replicate.Net.Models;
 using Stef.Validation;
 
@@ -11,7 +12,7 @@ namespace Replicate.Net.Common.Example.Client;
 
 public static class IExampleApiExtensions
 {
-    public static async Task<Prediction> CreatePredictionAndWaitOnResultAsync(this IExampleApi api, PredictionInput input, int timeoutInSeconds = 5 * 60, CancellationToken cancellationToken = default)
+    public static async Task<Prediction> CreatePredictionAndWaitOnResultAsync(this IExampleApi api, IPredictionInput input, int timeoutInSeconds = 5 * 60, CancellationToken cancellationToken = default)
     {
         Guard.NotNull(api);
         Guard.NotNull(input);

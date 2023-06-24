@@ -1,16 +1,22 @@
 ﻿using Newtonsoft.Json;
+using Replicate.Net.Interfaces;
 
 namespace Replicate.Net.Models;
 
 /// <summary>
-/// The model's input.
+/// The default model's input.
 /// </summary>
-public class PredictionInput
+public class DefaultPredictionInput : IPredictionInput
 {
     /// <summary>
     /// Input prompt.
     /// </summary>
     public string Prompt { get; set; } = null!;
+
+    /// <summary>
+    /// Negative prompt
+    /// </summary>
+    public string NegativePrompt { get; set; } = null!;
 
     /// <summary>
     /// Width of output image. Maximum size is 1024x768 or 768x1024 because of memory limits. Valid values are 128, 256, 512, 768 and 1024.

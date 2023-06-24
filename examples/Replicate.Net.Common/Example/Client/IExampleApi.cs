@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Replicate.Net.Interfaces;
 using Replicate.Net.Models;
 using RestEase;
 
@@ -11,7 +12,7 @@ public interface IExampleApi
     Task<Prediction> CancelPredictionAsync([Path] string predictionId, CancellationToken cancellationToken = default);
 
     [Post("predictions")]
-    Task<Prediction> CreatePredictionAsync([Body] PredictionInput input, CancellationToken cancellationToken = default);
+    Task<Prediction> CreatePredictionAsync([Body] IPredictionInput input, CancellationToken cancellationToken = default);
 
     [Get("predictions/{predictionId}")]
     Task<Prediction> GetPredictionAsync([Path] string predictionId, CancellationToken cancellationToken = default);
