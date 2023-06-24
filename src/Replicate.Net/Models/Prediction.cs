@@ -2,7 +2,7 @@
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Replicate.Net.Interop;
+using Replicate.Net.Interfaces;
 
 namespace Replicate.Net.Models;
 

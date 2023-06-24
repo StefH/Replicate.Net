@@ -1,4 +1,4 @@
-﻿using Replicate.Net.Interop;
+﻿using Replicate.Net.Interfaces;
 
 namespace Replicate.Net.Models;
 
