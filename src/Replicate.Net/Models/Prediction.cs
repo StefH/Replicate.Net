@@ -27,7 +27,7 @@ public class Prediction
     /// </summary>
     public string Status { get; set; } = null!;
 
-    public IPredictionInput Input { get; set; } = null!;
+    public JObject Input { get; set; } = null!;
 
     public object? Output { get; set; }
 
