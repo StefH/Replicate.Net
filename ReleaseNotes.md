@@ -1,3 +1,6 @@
+# 0.0.6 (04 July 2023)
+- [#15](https://github.com/StefH/Replicate.Net/pull/15) - Fixed the issue of interfaces not being serialized.  contributed by [vin-spiegel](https://github.com/vin-spiegel)
+
 # 0.0.5 (24 June 2023)
 - [#14](https://github.com/StefH/Replicate.Net/pull/14) - Refactor prediction input contributed by [vin-spiegel](https://github.com/vin-spiegel)
 

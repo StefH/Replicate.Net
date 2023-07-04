@@ -1,4 +1,4 @@
-# 0.0.5 (24 June 2023)
-- #14 Refactor prediction input
+# 0.0.6 (04 July 2023)
+- #15 Fixed the issue of interfaces not being serialized. 
 
 The full release notes can be found here: https://github.com/StefH/Replicate.Net/blob/main/ReleaseNotes.md

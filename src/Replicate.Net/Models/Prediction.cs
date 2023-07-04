@@ -2,7 +2,6 @@
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Replicate.Net.Interfaces;
 
 namespace Replicate.Net.Models;
 
@@ -36,12 +35,15 @@ public class Prediction
     {
         get
         {
-            return Output switch
+            switch (Output)
             {
-                JArray pictures => pictures.Values<string>().ToArray(),
-                string picture => new[] { picture },
-                _ => null
-            };
+                case JArray pictures:
+                    return pictures.Values<string>().Where(p => p != null).Select(p => p!).ToArray();
+                case string picture:
+                    return new[] { picture };
+                default:
+                    return null;
+            }
         }
     }
 
