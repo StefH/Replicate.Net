@@ -1,3 +1,6 @@
+# 0.0.7 (22 July 2023)
+- [#16](https://github.com/StefH/Replicate.Net/pull/16) - GetModelVersion api path is versions/{id} not version/{id} [bug] contributed by [chsword](https://github.com/chsword)
+
 # 0.0.6 (04 July 2023)
 - [#15](https://github.com/StefH/Replicate.Net/pull/15) - Fixed the issue of interfaces not being serialized.  contributed by [vin-spiegel](https://github.com/vin-spiegel)
 

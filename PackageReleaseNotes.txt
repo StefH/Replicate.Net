@@ -1,4 +1,4 @@
-# 0.0.6 (04 July 2023)
-- #15 Fixed the issue of interfaces not being serialized. 
+# 0.0.7 (22 July 2023)
+- #16 GetModelVersion api path is versions/{id} not version/{id} [bug]
 
 The full release notes can be found here: https://github.com/StefH/Replicate.Net/blob/main/ReleaseNotes.md
