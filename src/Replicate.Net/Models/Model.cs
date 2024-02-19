@@ -21,4 +21,11 @@ public class Model
     public Uri? LicenseUrl { get; set; } = null!;
 
     public ModelVersion LatestVersion { get; set; } = null!;
+
+    public int? RunCount { get; set; } = null!;
+
+    public Uri? CoverImageUrl { get; set; } = null!;
+
+    public Prediction? DefaultExample { get; set; } = null!;
+
 }
