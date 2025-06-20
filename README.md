@@ -45,7 +45,7 @@ var replicateApi = // injected
 
 ## Example WinForms application
 
-![example-winform](https://raw.githubusercontent.com/StefH/Replicate.Net/main/resources/example-winform.png)
+![example-winform](./resources/example-winform.jpg)
 
 
 <hr>
@@ -54,3 +54,12 @@ var replicateApi = // injected
 - https://replicate.com
 - https://mpost.io/best-100-stable-diffusion-prompts-the-most-beautiful-ai-text-to-image-prompts/
 - https://github.com/joelparkerhenderson/stable-diffusion-image-prompt-gallery
+
+
+## Sponsors
+
+[Entity Framework Extensions](https://entityframework-extensions.net/?utm_source=StefH) and [Dapper Plus](https://dapper-plus.net/?utm_source=StefH) are major sponsors and proud to contribute to the development of **Replicate.Net** and **Replicate.Net.DependencyInjection**.
+
+[![Entity Framework Extensions](https://raw.githubusercontent.com/StefH/resources/main/sponsor/entity-framework-extensions-sponsor.png)](https://entityframework-extensions.net/bulk-insert?utm_source=StefH)
+
+[![Dapper Plus](https://raw.githubusercontent.com/StefH/resources/main/sponsor/dapper-plus-sponsor.png)](https://dapper-plus.net/bulk-insert?utm_source=StefH)
