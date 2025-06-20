@@ -6,8 +6,8 @@ It implements the [HTTP API](https://replicate.com/docs/reference/http) from Rep
 ## Install
 | | |
 | - | - |
-| [![NuGet Badge](https://buildstats.info/nuget/Replicate.Net)](https://www.nuget.org/packages/Replicate.Net) | Main project
-| [![NuGet Badge](https://buildstats.info/nuget/Replicate.Net.DependencyInjection)](https://www.nuget.org/packages/Replicate.Net.DependencyInjection) | Support for Microsoft DependencyInjection
+| [![NuGet Badge](https://img.shields.io/nuget/v/Replicate.Net)](https://www.nuget.org/packages/Replicate.Net) | Main project
+| [![NuGet Badge](https://img.shields.io/nuget/v/Replicate.Net.DependencyInjection)](https://www.nuget.org/packages/Replicate.Net.DependencyInjection) | Support for Microsoft DependencyInjection
 
 ## Example (using Factory)
 ``` c#
