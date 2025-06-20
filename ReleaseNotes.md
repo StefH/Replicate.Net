@@ -1,3 +1,7 @@
+# 0.0.8 (20 June 2025)
+- [#18](https://github.com/StefH/Replicate.Net/pull/18) - Add missing properties to Model.cs [enhancement] contributed by [quacrobat](https://github.com/quacrobat)
+- [#19](https://github.com/StefH/Replicate.Net/pull/19) - Update some NuGet packages, update images + add sponsor [enhancement] contributed by [StefH](https://github.com/StefH)
+
 # 0.0.7 (22 July 2023)
 - [#16](https://github.com/StefH/Replicate.Net/pull/16) - GetModelVersion api path is versions/{id} not version/{id} [bug] contributed by [chsword](https://github.com/chsword)
 

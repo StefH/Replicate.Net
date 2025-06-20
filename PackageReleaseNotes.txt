@@ -1,4 +1,5 @@
-# 0.0.7 (22 July 2023)
-- #16 GetModelVersion api path is versions/{id} not version/{id} [bug]
+# 0.0.8 (20 June 2025)
+- #18 Add missing properties to Model.cs [enhancement]
+- #19 Update some NuGet packages, update images + add sponsor [enhancement]
 
 The full release notes can be found here: https://github.com/StefH/Replicate.Net/blob/main/ReleaseNotes.md
